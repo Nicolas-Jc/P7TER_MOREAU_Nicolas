@@ -37,12 +37,29 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/app/error");
     }
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
-
 }
+
+
+
+        /*http.authorizeRequests()
+                .antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
+                .hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                //.anyRequest().authenticated()
+                //.and().formLogin().loginPage("/login").permitAll()
+                .and().formLogin()
+                // configuration
+                .defaultSuccessUrl("/bidList/list").and().logout() // logout configuration
+                .logoutUrl("/app-logout").logoutSuccessUrl("/").and().exceptionHandling() // exception handling
+                // configuration
+                .accessDeniedPage("/app/error");
+    }*/
+
+
 
