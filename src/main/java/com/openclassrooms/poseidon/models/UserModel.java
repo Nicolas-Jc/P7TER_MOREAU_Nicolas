@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
@@ -22,18 +23,18 @@ public class UserModel {
     private Integer id;
 
     @Column(name = "username")
-    @NotNull(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @NotNull(message = "Password is mandatory")
+    @NotBlank(message = "Password is mandatory")
     @Column(name = "password")
     private String password;
 
-    @NotNull(message = "FullName is mandatory")
+    @NotBlank(message = "FullName is mandatory")
     @Column(name = "fullname")
     private String fullname;
 
-    @NotNull(message = "Role is mandatory")
+    @NotBlank(message = "Role is mandatory")
     @Column(name = "role")
     private String role;
 
