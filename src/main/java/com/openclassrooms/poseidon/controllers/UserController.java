@@ -1,6 +1,5 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.configuration.ValidPassword;
 import com.openclassrooms.poseidon.models.UserModel;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import com.openclassrooms.poseidon.services.UserService;

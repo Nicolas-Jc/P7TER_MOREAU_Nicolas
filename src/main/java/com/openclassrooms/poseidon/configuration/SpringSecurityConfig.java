@@ -30,12 +30,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**").permitAll()
                 //.anyRequest().authenticated()
                 //.and().formLogin().loginPage("/login").permitAll()
-                .and().formLogin()
-                // configuration
-                .defaultSuccessUrl("/bidList/list").and().logout() // logout configuration
-                .logoutUrl("/app-logout").logoutSuccessUrl("/").and().exceptionHandling() // exception handling
-                // configuration
-                .accessDeniedPage("/app/error");
+                .and()
+                .formLogin().defaultSuccessUrl("/bidList/list")
+                .and()
+                .oauth2Login().defaultSuccessUrl("/bidList/list")
+                .and()
+                .logout().logoutUrl("/app-logout").logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling().accessDeniedPage("/app/error");
     }
 
     @Autowired
