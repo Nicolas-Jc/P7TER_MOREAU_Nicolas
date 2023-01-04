@@ -1,5 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
+import com.openclassrooms.poseidon.configuration.ValidPassword;
 import com.openclassrooms.poseidon.models.UserModel;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import com.openclassrooms.poseidon.services.UserService;
@@ -50,6 +51,11 @@ public class UserController {
     @PostMapping("/user/validate")
     public String validate(@Valid @ModelAttribute(ATTRIB_NAME) UserModel user, BindingResult result,
                            Model model, RedirectAttributes redirAttrs) {
+
+        if (userService.checkIfUserExistsByUsername(user.getUsername())) {
+            redirAttrs.addFlashAttribute("ErrorUserExistantMessage", "User is already registered");
+            return "redirect:/user/add";
+        }
 
         if (!result.hasErrors()) {
             userService.saveUser(user);

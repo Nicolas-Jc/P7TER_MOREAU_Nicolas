@@ -11,8 +11,8 @@
     <div class="row">
         <h2>Add New User</h2>
     </div>
-    <p class="alert alert-danger" th:if="${!#strings.isEmpty(errorAddUserMessage)}"
-       th:text="${errorAddUserMessage}"></p>
+    <p class="alert alert-danger" th:if="${!#strings.isEmpty(ErrorUserExistantMessage)}"
+       th:text="${ErrorUserExistantMessage}"></p>
     <div class="row">
         <form action="#" th:action="@{/user/validate}" th:object="${user}" method="post" class="form-horizontal"
               style="width: 100%">
