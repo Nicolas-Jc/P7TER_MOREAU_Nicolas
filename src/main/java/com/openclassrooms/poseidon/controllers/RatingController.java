@@ -60,7 +60,7 @@ public class RatingController {
             redirAttrs.addFlashAttribute("successSaveMessage", "Rating successfully added to list");
             return REDIRECT_TRANSAC;
         }
-        logger.info("Error creation Rating");
+        logger.error("Error creation Rating");
         return "rating/add";
     }
 
@@ -69,25 +69,24 @@ public class RatingController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!ratingService.checkIfIdExists(id)) {
-                logger.info("GET /rating/update : Non existent id");
-                return "redirect:/rating/list";
+                logger.error("GET /rating/update : Non existent id");
+                return REDIRECT_TRANSAC;
             }
-            model.addAttribute("rating", ratingService.getRatingById(id));
+            model.addAttribute(ATTRIB_NAME, ratingService.getRatingById(id));
             logger.info("GET /rating/update : OK");
         } catch (Exception e) {
-            logger.info("GET /update/{id} : KO - Invalid rating ID {}", id);
+            logger.error("GET /update/{id} : KO - Invalid rating ID {}", id);
         }
         return "rating/update";
 
     }
-
 
     // Update Rating Button
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) RatingModel rating,
                                BindingResult result, RedirectAttributes redirAttrs) {
         if (!ratingService.checkIfIdExists(id)) {
-            logger.info(RATING_NOT_EXISTS, id);
+            logger.error(RATING_NOT_EXISTS, id);
             return REDIRECT_TRANSAC;
         }
         if (!result.hasErrors()) {
@@ -95,8 +94,8 @@ public class RatingController {
             redirAttrs.addFlashAttribute("successUpdateMessage", "Rating successfully updated");
             return REDIRECT_TRANSAC;
         }
-        logger.info("UPDATE Rating : KO");
-        return REDIRECT_TRANSAC;
+        logger.error("UPDATE Rating : KO");
+        return "rating/update";
     }
 
 
@@ -104,7 +103,7 @@ public class RatingController {
     public String deleteRating(@PathVariable("id") Integer id, Model model, RedirectAttributes redirAttrs) {
         try {
             if (!ratingService.checkIfIdExists(id)) {
-                logger.info(RATING_NOT_EXISTS, id);
+                logger.error(RATING_NOT_EXISTS, id);
                 return REDIRECT_TRANSAC;
             }
             ratingService.deleteRatingById(id);
@@ -112,7 +111,7 @@ public class RatingController {
             redirAttrs.addFlashAttribute("successDeleteMessage", "Rating successfully deleted");
         } catch (Exception e) {
             redirAttrs.addFlashAttribute("errorDeleteMessage", "Error during deletion");
-            logger.info("Error to delete \"Rating\" : {}", id);
+            logger.error("Error to delete \"Rating\" : {}", id);
         }
         return REDIRECT_TRANSAC;
     }

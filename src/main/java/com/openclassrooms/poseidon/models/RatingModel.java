@@ -6,16 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "rating")
 public class RatingModel {
     @Id
@@ -38,9 +31,48 @@ public class RatingModel {
     @Column(name = "fitch_rating")
     private String fitchRating;
 
+    @Positive(message = "Order Number must be greater than zero")
     @NotNull(message = "Order Number is mandatory")
-    @PositiveOrZero(message = "Order Number should be a decimal number and greater than zero")
     @Column(name = "order_number")
     private Integer orderNumber;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getMoodysRating() {
+        return moodysRating;
+    }
+
+    public void setMoodysRating(String moodysRating) {
+        this.moodysRating = moodysRating;
+    }
+
+    public String getSandPRating() {
+        return sandPRating;
+    }
+
+    public void setSandPRating(String sandPRating) {
+        this.sandPRating = sandPRating;
+    }
+
+    public String getFitchRating() {
+        return fitchRating;
+    }
+
+    public void setFitchRating(String fitchRating) {
+        this.fitchRating = fitchRating;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 }

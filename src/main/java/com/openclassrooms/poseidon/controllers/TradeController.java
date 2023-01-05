@@ -56,7 +56,7 @@ public class TradeController {
             redirAttrs.addFlashAttribute("successSaveMessage", "Trade successfully added to list");
             return REDIRECT_TRANSAC;
         }
-        logger.info("Error creation Trade");
+        logger.error("Error creation Trade");
         return "trade/add";
     }
 
@@ -65,13 +65,13 @@ public class TradeController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!tradeService.checkIfTradeIdExists(id)) {
-                logger.info("GET /trade/update : Non existent id");
-                return "redirect:/trade/list";
+                logger.error("GET /trade/update : Non existent id");
+                return REDIRECT_TRANSAC;
             }
-            model.addAttribute("trade", tradeService.getTradeById(id));
+            model.addAttribute(ATTRIB_NAME, tradeService.getTradeById(id));
             logger.info("GET /trade/update : OK");
         } catch (Exception e) {
-            logger.info("GET /trade/update : KO - Invalid trade ID {}", id);
+            logger.error("GET /trade/update : KO - Invalid trade ID {}", id);
         }
         return "trade/update";
 
@@ -82,7 +82,7 @@ public class TradeController {
     public String updateTrade(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) TradeModel trade,
                               BindingResult result, RedirectAttributes redirAttrs) {
         if (!tradeService.checkIfTradeIdExists(id)) {
-            logger.info(TRADE_NOT_EXISTS, id);
+            logger.error(TRADE_NOT_EXISTS, id);
             return REDIRECT_TRANSAC;
         }
         if (!result.hasErrors()) {
@@ -90,15 +90,15 @@ public class TradeController {
             redirAttrs.addFlashAttribute("successUpdateMessage", "Trade successfully updated");
             return REDIRECT_TRANSAC;
         }
-        logger.info("UPDATE Trade : KO");
-        return REDIRECT_TRANSAC;
+        logger.error("UPDATE Trade : KO");
+        return "trade/update";
     }
 
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model, RedirectAttributes redirAttrs) {
         try {
             if (!tradeService.checkIfTradeIdExists(id)) {
-                logger.info(TRADE_NOT_EXISTS, id);
+                logger.error(TRADE_NOT_EXISTS, id);
                 return REDIRECT_TRANSAC;
             }
             tradeService.deleteTradeById(id);
@@ -106,7 +106,7 @@ public class TradeController {
             redirAttrs.addFlashAttribute("successDeleteMessage", "Trade successfully deleted");
         } catch (Exception e) {
             redirAttrs.addFlashAttribute("errorDeleteMessage", "Error during deletion");
-            logger.info("Error to delete \"Trade\" : {}", id);
+            logger.error("Error to delete \"Trade\" : {}", id);
         }
         return REDIRECT_TRANSAC;
     }

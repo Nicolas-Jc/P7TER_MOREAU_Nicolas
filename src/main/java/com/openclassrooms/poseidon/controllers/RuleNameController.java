@@ -56,7 +56,7 @@ public class RuleNameController {
             redirAttrs.addFlashAttribute("successSaveMessage", "Rule successfully added to list");
             return REDIRECT_TRANSAC;
         }
-        logger.info("Error creation Rule");
+        logger.error("Error creation Rule");
         return "ruleName/add";
     }
 
@@ -65,13 +65,13 @@ public class RuleNameController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!ruleNameService.checkIfIdExists(id)) {
-                logger.info("GET /ruleName/update : Non existent id");
-                return "redirect:/ruleName/list";
+                logger.error("GET /ruleName/update : Non existent id");
+                return REDIRECT_TRANSAC;
             }
-            model.addAttribute("ruleName", ruleNameService.getRuleNameById(id));
+            model.addAttribute(ATTRIB_NAME, ruleNameService.getRuleNameById(id));
             logger.info("GET /ruleName/update : OK");
         } catch (Exception e) {
-            logger.info("/ruleName/update/{id} : KO - Invalid rule name ID {}", id);
+            logger.error("/ruleName/update/{id} : KO - Invalid rule name ID {}", id);
         }
         return "ruleName/update";
 
@@ -82,7 +82,7 @@ public class RuleNameController {
     public String updateRuleName(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) RuleModel ruleName,
                                  BindingResult result, RedirectAttributes redirAttrs) {
         if (!ruleNameService.checkIfIdExists(id)) {
-            logger.info(RULE_NOT_EXISTS, id);
+            logger.error(RULE_NOT_EXISTS, id);
             return REDIRECT_TRANSAC;
         }
         if (!result.hasErrors()) {
@@ -90,15 +90,15 @@ public class RuleNameController {
             redirAttrs.addFlashAttribute("successUpdateMessage", "Rule successfully updated");
             return REDIRECT_TRANSAC;
         }
-        logger.info("UPDATE Rule : KO");
-        return REDIRECT_TRANSAC;
+        logger.error("UPDATE Rule : KO");
+        return "ruleName/update";
     }
 
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model, RedirectAttributes redirAttrs) {
         try {
             if (!ruleNameService.checkIfIdExists(id)) {
-                logger.info(RULE_NOT_EXISTS, id);
+                logger.error(RULE_NOT_EXISTS, id);
                 return REDIRECT_TRANSAC;
             }
             ruleNameService.deleteRuleNameById(id);
@@ -106,7 +106,7 @@ public class RuleNameController {
             redirAttrs.addFlashAttribute("successDeleteMessage", "Rule successfully deleted");
         } catch (Exception e) {
             redirAttrs.addFlashAttribute("errorDeleteMessage", "Error during deletion");
-            logger.info("Error to delete \"Rule\" : {}", id);
+            logger.error("Error to delete \"Rule\" : {}", id);
         }
         return REDIRECT_TRANSAC;
     }

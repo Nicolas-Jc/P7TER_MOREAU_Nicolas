@@ -2,6 +2,7 @@ package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.BidListModel;
 import com.openclassrooms.poseidon.services.BidListService;
+import com.openclassrooms.poseidon.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @Controller
@@ -21,6 +23,9 @@ public class BidListController {
 
     @Autowired
     private BidListService bidListService;
+
+    @Autowired
+    private UserService userService;
 
     private static final Logger logger = LogManager.getLogger(BidListController.class);
 
@@ -31,6 +36,7 @@ public class BidListController {
 
 
     // return view containing all Bids
+
     @GetMapping("/bidList/list")
     public String home(Model model) {
         model.addAttribute(ATTRIB_NAME, bidListService.getAllBids());
@@ -66,10 +72,10 @@ public class BidListController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!bidListService.checkIfIdExists(id)) {
-                logger.info("GET /bidList/update : Non existent id");
-                return "redirect:/bidList/list";
+                logger.error("GET /bidList/update : Non existent id");
+                return REDIRECT_TRANSAC;
             }
-            model.addAttribute("bidList", bidListService.getBidByBidListId(id));
+            model.addAttribute(ATTRIB_NAME, bidListService.getBidByBidListId(id));
             logger.info("GET /bidList/update : OK");
         } catch (Exception e) {
             logger.error("/bidList/update/{id} : KO - Invalid bidList ID {} :", id);
@@ -92,7 +98,7 @@ public class BidListController {
             return REDIRECT_TRANSAC;
         }
         logger.error("UPDATE Bid : KO");
-        return "/bidList/add";
+        return "/bidList/update";
     }
 
     // Bid Delete Button

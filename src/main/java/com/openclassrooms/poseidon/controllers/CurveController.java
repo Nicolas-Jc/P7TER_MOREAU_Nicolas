@@ -58,7 +58,7 @@ public class CurveController {
             redirAttrs.addFlashAttribute("successSaveMessage", "CurvePoint successfully added to list");
             return REDIRECT_TRANSAC;
         }
-        logger.info("Error creation CurvePoint");
+        logger.error("Error creation CurvePoint");
         return "curvePoint/add";
     }
 
@@ -67,13 +67,13 @@ public class CurveController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!curvePointService.checkIfIdExists(id)) {
-                logger.info("GET /curvePoint/update : Non existent id");
-                return "redirect:/curvePoint/list";
+                logger.error("GET /curvePoint/update : Non existent id");
+                return REDIRECT_TRANSAC;
             }
-            model.addAttribute("curvePoint", curvePointService.getCurvePointById(id));
+            model.addAttribute(ATTRIB_NAME, curvePointService.getCurvePointById(id));
             logger.info("GET /curvePoint/update : OK");
         } catch (Exception e) {
-            logger.info("/curvePoint/update/{id} : KO - Invalid curve point ID {}", id);
+            logger.error("/curvePoint/update/{id} : KO - Invalid curve point ID {}", id);
         }
         return "curvePoint/update";
     }
@@ -83,7 +83,7 @@ public class CurveController {
     public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) CurvePointModel curvePoint,
                             BindingResult result, RedirectAttributes redirAttrs) {
         if (!curvePointService.checkIfIdExists(id)) {
-            logger.info(CURVE_POINT_NOT_EXISTS, id);
+            logger.error(CURVE_POINT_NOT_EXISTS, id);
             return REDIRECT_TRANSAC;
         }
         if (!result.hasErrors()) {
@@ -91,15 +91,15 @@ public class CurveController {
             redirAttrs.addFlashAttribute("successUpdateMessage", "CurvePoint successfully updated");
             return REDIRECT_TRANSAC;
         }
-        logger.info("UPDATE CurvePoint : KO");
-        return REDIRECT_TRANSAC;
+        logger.error("UPDATE CurvePoint : KO");
+        return "curvePoint/update";
     }
 
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model, RedirectAttributes redirAttrs) {
         try {
             if (!curvePointService.checkIfIdExists(id)) {
-                logger.info(CURVE_POINT_NOT_EXISTS, id);
+                logger.error(CURVE_POINT_NOT_EXISTS, id);
                 return REDIRECT_TRANSAC;
             }
             curvePointService.deleteCurvePointById(id);
@@ -107,7 +107,7 @@ public class CurveController {
             redirAttrs.addFlashAttribute("successDeleteMessage", "CurvePoint successfully deleted");
         } catch (Exception e) {
             redirAttrs.addFlashAttribute("errorDeleteMessage", "Error during deletion");
-            logger.info("Error to delete \"CurvePoint\" : {}", id);
+            logger.error("Error to delete \"CurvePoint\" : {}", id);
         }
         return REDIRECT_TRANSAC;
     }
