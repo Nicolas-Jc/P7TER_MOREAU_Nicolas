@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.UserModel;
+import com.openclassrooms.poseidon.models.User;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import com.openclassrooms.poseidon.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +40,7 @@ public class UserController {
     //@RolesAllowed("ADMIN")
     @GetMapping("/user/add")
     public String addUser(Model model) {
-        model.addAttribute("user", new UserModel());
+        model.addAttribute("user", new User());
         logger.info("View User Add Form loaded");
         return "user/add";
     }
@@ -48,7 +48,7 @@ public class UserController {
     // Button Add User To List
     //@RolesAllowed("ADMIN")
     @PostMapping("/user/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) UserModel user, BindingResult result,
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) User user, BindingResult result,
                            Model model, RedirectAttributes redirAttrs) {
 
         if (userService.checkIfUserExistsByUsername(user.getUsername())) {
@@ -73,7 +73,7 @@ public class UserController {
             if (!userService.checkIfUserExistsById(id)) {
                 return "redirect:/user/list";
             }
-            UserModel user = userService.getUserById(id);
+            User user = userService.getUserById(id);
             user.setPassword("");
             model.addAttribute("user", user);
             logger.info("GET /user/update : OK");
@@ -86,7 +86,7 @@ public class UserController {
     // Update User Button
     //@RolesAllowed("ADMIN")
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) UserModel user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) User user,
                              BindingResult result, Model model, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             logger.info("UPDATE User : KO");

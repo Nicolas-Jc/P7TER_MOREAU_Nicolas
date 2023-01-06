@@ -1,16 +1,11 @@
 package com.openclassrooms.poseidon.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "rating")
-public class RatingModel {
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

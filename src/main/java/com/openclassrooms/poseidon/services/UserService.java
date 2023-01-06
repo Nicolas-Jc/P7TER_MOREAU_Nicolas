@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.UserModel;
+import com.openclassrooms.poseidon.models.User;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ public class UserService {
         this.userRepository = userRep;
     }
 
-    public List<UserModel> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -35,15 +35,15 @@ public class UserService {
         return userRepository.existsById(id);
     }
 
-    public UserModel getUserById(int id) {
+    public User getUserById(int id) {
         return userRepository.findById(id);
     }
 
-    public UserModel getUserByEmail(String username) {
+    public User getUserByEmail(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public void saveUser(UserModel user) {
+    public void saveUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);

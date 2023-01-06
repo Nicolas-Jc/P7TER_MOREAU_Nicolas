@@ -1,55 +1,48 @@
 package com.openclassrooms.poseidon.models;
 
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
+
 @Entity
-@Table(name = "bidlist")
-public class BidListModel {
+@Table(name = "trade")
+public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "bid_list_id")
-    private Integer bidListId;
+    @Column(name = "trade_id")
+    private Integer tradeId;
 
-    @Column(name = "account")
     @NotBlank(message = "Account is mandatory")
     @Size(max = 30)
+    @Column(name = "account")
     private String account;
 
-    @Column(name = "type")
-    @NotBlank(message = "Type is mandatory")
     @Size(max = 30)
+    @NotBlank(message = "Type is mandatory")
+    @Column(name = "type")
     private String type;
 
-    @Column(name = "bid_quantity")
-    @NotNull(message = "Bid Quantity is mandatory")
-    @Positive(message = "Bid Quantity must be greater than zero")
-    private Double bidQuantity;
+    @NotNull(message = "By Quantity is mandatory")
+    @Positive(message = "Buy Quantity must be greater than zero")
+    @Column(name = "buy_quantity")
+    private Double buyQuantity;
 
-    @Column(name = "ask_quantity")
-    private Double askQuantity;
+    @Column(name = "sell_quantity")
+    private Double sellQuantity;
 
-    @Column(name = "bid")
-    private Double bid;
+    @Column(name = "buy_price")
+    private Double buyPrice;
 
-    @Column(name = "ask")
-    private Double ask;
+    @Column(name = "sell_price")
+    private Double sellPrice;
 
     @Size(max = 125)
     @Column(name = "benchmark")
     private String benchmark;
 
-    @Column(name = "bid_list_date")
-    private Timestamp bidListDate;
-
-    @Size(max = 125)
-    @Column(name = "commentary")
-    private String commentary;
+    @Column(name = "trade_date")
+    private Timestamp tradeDate;
 
     @Size(max = 125)
     @Column(name = "security")
@@ -90,19 +83,19 @@ public class BidListModel {
     private String dealType;
 
     @Size(max = 125)
-    @Column(name = "source_listid")
+    @Column(name = "source_list_id")
     private String sourceListId;
 
     @Size(max = 125)
     @Column(name = "side")
     private String side;
 
-    public Integer getBidListId() {
-        return bidListId;
+    public Integer getTradeId() {
+        return tradeId;
     }
 
-    public void setBidListId(Integer bidListId) {
-        this.bidListId = bidListId;
+    public void setTradeId(Integer tradeId) {
+        this.tradeId = tradeId;
     }
 
     public String getAccount() {
@@ -121,36 +114,36 @@ public class BidListModel {
         this.type = type;
     }
 
-    public Double getBidQuantity() {
-        return bidQuantity;
+    public Double getBuyQuantity() {
+        return buyQuantity;
     }
 
-    public void setBidQuantity(Double bidQuantity) {
-        this.bidQuantity = bidQuantity;
+    public void setBuyQuantity(Double buyQuantity) {
+        this.buyQuantity = buyQuantity;
     }
 
-    public Double getAskQuantity() {
-        return askQuantity;
+    public Double getSellQuantity() {
+        return sellQuantity;
     }
 
-    public void setAskQuantity(Double askQuantity) {
-        this.askQuantity = askQuantity;
+    public void setSellQuantity(Double sellQuantity) {
+        this.sellQuantity = sellQuantity;
     }
 
-    public Double getBid() {
-        return bid;
+    public Double getBuyPrice() {
+        return buyPrice;
     }
 
-    public void setBid(Double bid) {
-        this.bid = bid;
+    public void setBuyPrice(Double buyPrice) {
+        this.buyPrice = buyPrice;
     }
 
-    public Double getAsk() {
-        return ask;
+    public Double getSellPrice() {
+        return sellPrice;
     }
 
-    public void setAsk(Double ask) {
-        this.ask = ask;
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
     public String getBenchmark() {
@@ -161,20 +154,12 @@ public class BidListModel {
         this.benchmark = benchmark;
     }
 
-    public Timestamp getBidListDate() {
-        return bidListDate;
+    public Timestamp getTradeDate() {
+        return tradeDate;
     }
 
-    public void setBidListDate(Timestamp bidListDate) {
-        this.bidListDate = bidListDate;
-    }
-
-    public String getCommentary() {
-        return commentary;
-    }
-
-    public void setCommentary(String commentary) {
-        this.commentary = commentary;
+    public void setTradeDate(Timestamp tradeDate) {
+        this.tradeDate = tradeDate;
     }
 
     public String getSecurity() {

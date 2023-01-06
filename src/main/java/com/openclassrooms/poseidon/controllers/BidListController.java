@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.BidListModel;
+import com.openclassrooms.poseidon.models.BidList;
 import com.openclassrooms.poseidon.services.BidListService;
 import com.openclassrooms.poseidon.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @Controller
@@ -48,14 +47,14 @@ public class BidListController {
     // view bidList/add
     @GetMapping("/bidList/add")
     public String addBidForm(Model model) {
-        model.addAttribute(ATTRIB_NAME, new BidListModel());
+        model.addAttribute(ATTRIB_NAME, new BidList());
         logger.info("View bidListAdd : OK");
         return "bidList/add";
     }
 
     // Button Add Bid To List
     @PostMapping("/bidList/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) BidListModel bidList,
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) BidList bidList,
                            BindingResult result, RedirectAttributes redirAttrs) {
 
         if (!result.hasErrors()) {
@@ -86,7 +85,7 @@ public class BidListController {
 
     // Update Bid Button
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) BidListModel bidList,
+    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) BidList bidList,
                             BindingResult result, RedirectAttributes redirAttrs) {
         if (!bidListService.checkIfIdExists(id)) {
             logger.error(BID_NOT_EXISTS, id);

@@ -1,19 +1,13 @@
 package com.openclassrooms.poseidon.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "curvepoint")
-public class CurvePointModel {
+public class CurvePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

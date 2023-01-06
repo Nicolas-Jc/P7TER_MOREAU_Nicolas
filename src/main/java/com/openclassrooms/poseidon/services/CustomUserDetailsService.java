@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.UserModel;
+import com.openclassrooms.poseidon.models.User;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements org.springframework.security.co
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserModel user = userRepository.findByUsername(userName);
+        User user = userRepository.findByUsername(userName);
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),

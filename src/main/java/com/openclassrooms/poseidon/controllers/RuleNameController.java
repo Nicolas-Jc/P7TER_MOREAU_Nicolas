@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.RuleModel;
+import com.openclassrooms.poseidon.models.Rule;
 import com.openclassrooms.poseidon.repositories.RuleNameRepository;
 import com.openclassrooms.poseidon.services.RuleNameService;
 import org.apache.logging.log4j.LogManager;
@@ -43,14 +43,14 @@ public class RuleNameController {
     // view Rules/add
     @GetMapping("/ruleName/add")
     public String addRuleForm(Model model) {
-        model.addAttribute(ATTRIB_NAME, new RuleModel());
+        model.addAttribute(ATTRIB_NAME, new Rule());
         logger.info("View Rule Add loaded");
         return "ruleName/add";
     }
 
     // Button Add Rule To List
     @PostMapping("/ruleName/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) RuleModel ruleName, BindingResult result, RedirectAttributes redirAttrs) {
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) Rule ruleName, BindingResult result, RedirectAttributes redirAttrs) {
         if (!result.hasErrors()) {
             ruleNameService.saveRuleName(ruleName);
             redirAttrs.addFlashAttribute("successSaveMessage", "Rule successfully added to list");
@@ -79,7 +79,7 @@ public class RuleNameController {
 
     // Update Rule Button
     @PostMapping("/ruleName/update/{id}")
-    public String updateRuleName(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) RuleModel ruleName,
+    public String updateRuleName(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) Rule ruleName,
                                  BindingResult result, RedirectAttributes redirAttrs) {
         if (!ruleNameService.checkIfIdExists(id)) {
             logger.error(RULE_NOT_EXISTS, id);

@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.TradeModel;
+import com.openclassrooms.poseidon.models.Trade;
 import com.openclassrooms.poseidon.repositories.TradeRepository;
 import com.openclassrooms.poseidon.services.TradeService;
 import org.apache.logging.log4j.LogManager;
@@ -43,14 +43,14 @@ public class TradeController {
     // view Trade/add
     @GetMapping("/trade/add")
     public String addTradeForm(Model model) {
-        model.addAttribute(ATTRIB_NAME, new TradeModel());
+        model.addAttribute(ATTRIB_NAME, new Trade());
         logger.info("View Trade Add loaded");
         return "trade/add";
     }
 
     // Button Add Trade To List
     @PostMapping("/trade/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) TradeModel trade, BindingResult result, RedirectAttributes redirAttrs) {
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) Trade trade, BindingResult result, RedirectAttributes redirAttrs) {
         if (!result.hasErrors()) {
             tradeService.addTrade(trade);
             redirAttrs.addFlashAttribute("successSaveMessage", "Trade successfully added to list");
@@ -79,7 +79,7 @@ public class TradeController {
 
     // Update Trade Button
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) TradeModel trade,
+    public String updateTrade(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) Trade trade,
                               BindingResult result, RedirectAttributes redirAttrs) {
         if (!tradeService.checkIfTradeIdExists(id)) {
             logger.error(TRADE_NOT_EXISTS, id);

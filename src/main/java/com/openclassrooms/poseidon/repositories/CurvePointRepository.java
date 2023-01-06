@@ -1,12 +1,12 @@
 package com.openclassrooms.poseidon.repositories;
 
-import com.openclassrooms.poseidon.models.CurvePointModel;
+import com.openclassrooms.poseidon.models.CurvePoint;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface CurvePointRepository extends JpaRepository<CurvePointModel, Integer> {
+public interface CurvePointRepository extends JpaRepository<CurvePoint, Integer> {
 
-    CurvePointModel findById(int id);
+    CurvePoint findById(int id);
 
 
 }

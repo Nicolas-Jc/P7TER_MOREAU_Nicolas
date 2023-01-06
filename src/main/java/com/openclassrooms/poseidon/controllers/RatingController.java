@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.RatingModel;
+import com.openclassrooms.poseidon.models.Rating;
 import com.openclassrooms.poseidon.repositories.RatingRepository;
 import com.openclassrooms.poseidon.services.RatingService;
 import org.apache.logging.log4j.LogManager;
@@ -46,14 +46,14 @@ public class RatingController {
     // view Rating/add
     @GetMapping("/rating/add")
     public String addRatingForm(Model model) {
-        model.addAttribute(ATTRIB_NAME, new RatingModel());
+        model.addAttribute(ATTRIB_NAME, new Rating());
         logger.info("View Rating Add loaded");
         return "rating/add";
     }
 
     // Button Add Rating To List
     @PostMapping("/rating/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) RatingModel rating, BindingResult result, RedirectAttributes redirAttrs) {
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) Rating rating, BindingResult result, RedirectAttributes redirAttrs) {
 
         if (!result.hasErrors()) {
             ratingService.saveRating(rating);
@@ -83,7 +83,7 @@ public class RatingController {
 
     // Update Rating Button
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) RatingModel rating,
+    public String updateRating(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) Rating rating,
                                BindingResult result, RedirectAttributes redirAttrs) {
         if (!ratingService.checkIfIdExists(id)) {
             logger.error(RATING_NOT_EXISTS, id);

@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.BidListModel;
+import com.openclassrooms.poseidon.models.BidList;
 import com.openclassrooms.poseidon.repositories.BidListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ public class BidListService {
         this.bidListRepository = bidListRep;
     }
 
-    public List<BidListModel> getAllBids() {
+    public List<BidList> getAllBids() {
         return bidListRepository.findAll();
     }
 
@@ -31,7 +31,7 @@ public class BidListService {
         return bidListRepository.existsById(id);
     }
 
-    public void addBid(BidListModel bidList) {
+    public void addBid(BidList bidList) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         bidList.setBidListDate(timestamp);
         bidList.setCreationDate(timestamp);
@@ -39,11 +39,11 @@ public class BidListService {
         logger.info("Bid Id: {} was added to BidList", bidList.getBidListId());
     }
 
-    public BidListModel getBidByBidListId(int bidListId) {
+    public BidList getBidByBidListId(int bidListId) {
         return bidListRepository.findByBidListId(bidListId);
     }
 
-    public void updateBid(BidListModel bidList) {
+    public void updateBid(BidList bidList) {
         bidListRepository.save(bidList);
         logger.info("UPDATE Bid : OK");
     }

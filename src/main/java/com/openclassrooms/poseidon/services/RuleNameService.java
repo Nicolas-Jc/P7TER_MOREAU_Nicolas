@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.RuleModel;
+import com.openclassrooms.poseidon.models.Rule;
 import com.openclassrooms.poseidon.repositories.RuleNameRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ public class RuleNameService {
         this.ruleNameRepository = ruleNameRep;
     }
 
-    public List<RuleModel> getAllRuleNames() {
+    public List<Rule> getAllRuleNames() {
         return ruleNameRepository.findAll();
     }
 
@@ -30,7 +30,7 @@ public class RuleNameService {
         return ruleNameRepository.existsById(id);
     }
 
-    public void saveRuleName(RuleModel ruleName) {
+    public void saveRuleName(Rule ruleName) {
         ruleNameRepository.save(ruleName);
         logger.info("Rule Name Id:{} was saved to Rule List", ruleName.getId());
     }
@@ -40,7 +40,7 @@ public class RuleNameService {
         logger.info("Delete Rule : OK");
     }
 
-    public RuleModel getRuleNameById(int id) {
+    public Rule getRuleNameById(int id) {
         return ruleNameRepository.findById(id);
     }
 

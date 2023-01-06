@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.CurvePointModel;
+import com.openclassrooms.poseidon.models.CurvePoint;
 import com.openclassrooms.poseidon.repositories.CurvePointRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +23,11 @@ public class CurvePointService {
         this.curvePointRepository = curvePointRep;
     }
 
-    public List<CurvePointModel> getAllCurvePoints() {
+    public List<CurvePoint> getAllCurvePoints() {
         return curvePointRepository.findAll();
     }
 
-    public void addCurvePoint(CurvePointModel curvePoint) {
+    public void addCurvePoint(CurvePoint curvePoint) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         curvePoint.setAsOfDate(timestamp);
         curvePoint.setCreationDate(timestamp);
@@ -35,7 +35,7 @@ public class CurvePointService {
         logger.info("CurvePoint Id:{} was added to Curve Point List", curvePoint.getCurveId());
     }
 
-    public void updateCurvePoint(CurvePointModel curvePoint) {
+    public void updateCurvePoint(CurvePoint curvePoint) {
         curvePointRepository.save(curvePoint);
         logger.info("UPDATE CurvePoint : OK");
     }
@@ -49,7 +49,7 @@ public class CurvePointService {
         logger.info("Delete CurvePoint : OK");
     }
 
-    public CurvePointModel getCurvePointById(int curvePointId) {
+    public CurvePoint getCurvePointById(int curvePointId) {
         return curvePointRepository.findById(curvePointId);
     }
 

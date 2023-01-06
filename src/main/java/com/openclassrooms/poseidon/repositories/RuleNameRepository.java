@@ -1,11 +1,11 @@
 package com.openclassrooms.poseidon.repositories;
 
-import com.openclassrooms.poseidon.models.RuleModel;
+import com.openclassrooms.poseidon.models.Rule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface RuleNameRepository extends JpaRepository<RuleModel, Integer> {
+public interface RuleNameRepository extends JpaRepository<Rule, Integer> {
 
-    RuleModel findById(int id);
+    Rule findById(int id);
 
 }

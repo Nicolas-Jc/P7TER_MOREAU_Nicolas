@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.CurvePointModel;
+import com.openclassrooms.poseidon.models.CurvePoint;
 import com.openclassrooms.poseidon.repositories.CurvePointRepository;
 import com.openclassrooms.poseidon.services.CurvePointService;
 import org.apache.logging.log4j.LogManager;
@@ -44,14 +44,14 @@ public class CurveController {
     // view CurvePoint/add
     @GetMapping("/curvePoint/add")
     public String addCurvePointForm(Model model) {
-        model.addAttribute(ATTRIB_NAME, new CurvePointModel());
+        model.addAttribute(ATTRIB_NAME, new CurvePoint());
         logger.info("View CurvePoint Add loaded");
         return "curvePoint/add";
     }
 
     // Button Add CurvePoint To List
     @PostMapping("/curvePoint/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) CurvePointModel curvePoint, BindingResult result, RedirectAttributes redirAttrs) {
+    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) CurvePoint curvePoint, BindingResult result, RedirectAttributes redirAttrs) {
 
         if (!result.hasErrors()) {
             curvePointService.addCurvePoint(curvePoint);
@@ -80,7 +80,7 @@ public class CurveController {
 
     // Update CurvePoint Button
     @PostMapping("/curvePoint/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) CurvePointModel curvePoint,
+    public String updateBid(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) CurvePoint curvePoint,
                             BindingResult result, RedirectAttributes redirAttrs) {
         if (!curvePointService.checkIfIdExists(id)) {
             logger.error(CURVE_POINT_NOT_EXISTS, id);

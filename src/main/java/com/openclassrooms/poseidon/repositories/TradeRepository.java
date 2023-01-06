@@ -1,11 +1,11 @@
 package com.openclassrooms.poseidon.repositories;
 
-import com.openclassrooms.poseidon.models.TradeModel;
+import com.openclassrooms.poseidon.models.Trade;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface TradeRepository extends JpaRepository<TradeModel, Integer> {
+public interface TradeRepository extends JpaRepository<Trade, Integer> {
 
-    TradeModel findById(int id);
+    Trade findById(int id);
 
 }

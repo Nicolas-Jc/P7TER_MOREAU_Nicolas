@@ -1,6 +1,6 @@
 package com.openclassrooms.poseidon.services;
 
-import com.openclassrooms.poseidon.models.RatingModel;
+import com.openclassrooms.poseidon.models.Rating;
 import com.openclassrooms.poseidon.repositories.RatingRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ public class RatingService {
         this.ratingRepository = ratingRep;
     }
 
-    public List<RatingModel> getAllRatings() {
+    public List<Rating> getAllRatings() {
         return ratingRepository.findAll();
     }
 
@@ -30,7 +30,7 @@ public class RatingService {
         return ratingRepository.existsById(id);
     }
 
-    public void saveRating(RatingModel rating) {
+    public void saveRating(Rating rating) {
         ratingRepository.save(rating);
         logger.info("Rating Id:{} was saved to Rating List", rating.getId());
     }
@@ -40,7 +40,7 @@ public class RatingService {
         logger.info("Delete Rating : OK");
     }
 
-    public RatingModel getRatingById(int id) {
+    public Rating getRatingById(int id) {
         return ratingRepository.findById(id);
     }
 }
