@@ -86,7 +86,7 @@ public class UserController {
     // Update User Button
     //@RolesAllowed("ADMIN")
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute(ATTRIB_NAME) User user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") User user,
                              BindingResult result, Model model, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             logger.info("UPDATE User : KO");
@@ -96,7 +96,7 @@ public class UserController {
             logger.info(USER_NOT_EXISTS, id);
             return REDIRECT_TRANSAC;
         }
-
+        user.setId(id);
         userService.saveUser(user);
         model.addAttribute("user", userService.getAllUsers());
         redirAttrs.addFlashAttribute("successUpdateMessage", "User successfully updated");
