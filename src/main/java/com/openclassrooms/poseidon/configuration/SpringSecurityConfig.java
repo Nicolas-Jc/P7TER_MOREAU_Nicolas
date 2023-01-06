@@ -24,7 +24,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
-                .hasAnyAuthority("ADMIN", "USER")
+                .hasAuthority("ADMIN")
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
@@ -38,6 +38,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/app-logout").logoutSuccessUrl("/")
                 .and()
                 .exceptionHandling().accessDeniedPage("/app/error");
+                /*
+                //.antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
+                //.hasAnyAuthority("ADMIN", "USER", "ROLE_USER")
+                .antMatchers("/user/list").hasAuthority("ADMIN")
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .anyRequest().authenticated()
+                //.and().formLogin().loginPage("/login").permitAll()
+                .and()
+                .formLogin().defaultSuccessUrl("/bidList/list")
+                .and()
+                .oauth2Login().defaultSuccessUrl("/bidList/list")
+                .and()
+                .logout().logoutUrl("/app-logout").logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling().accessDeniedPage("/app/error");
+                */
+
+
     }
 
     @Autowired
