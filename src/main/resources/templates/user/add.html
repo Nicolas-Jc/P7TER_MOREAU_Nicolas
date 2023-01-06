@@ -34,6 +34,9 @@
                 <label for="password" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
                     <input type="password" th:field="*{password}" id="password" placeholder="Password" class="col-4">
+                    <label><em><small>Password policy : At least One uppercase and One lowercase One special
+                        character / One digit (no blank space and at least 8 characters).
+                    </small></em></label>
                     <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                 </div>
             </div>

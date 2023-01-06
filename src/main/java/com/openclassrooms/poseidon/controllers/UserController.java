@@ -1,5 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
+import com.openclassrooms.poseidon.configuration.ValidPassword;
 import com.openclassrooms.poseidon.models.User;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import com.openclassrooms.poseidon.services.UserService;
@@ -32,7 +33,7 @@ public class UserController {
     //@RolesAllowed("ADMIN")
     @RequestMapping("/user/list")
     public String home(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute(ATTRIB_NAME, userService.getAllUsers());
         logger.info("User List Data loading");
         return "user/list";
     }
@@ -48,7 +49,7 @@ public class UserController {
     // Button Add User To List
     //@RolesAllowed("ADMIN")
     @PostMapping("/user/validate")
-    public String validate(@Valid @ModelAttribute(ATTRIB_NAME) User user, BindingResult result,
+    public String validate(@Valid @ValidPassword @ModelAttribute("user") User user, BindingResult result,
                            Model model, RedirectAttributes redirAttrs) {
 
         if (userService.checkIfUserExistsByUsername(user.getUsername())) {
@@ -59,7 +60,7 @@ public class UserController {
         if (!result.hasErrors()) {
             userService.saveUser(user);
             redirAttrs.addFlashAttribute("successSaveMessage", "User successfully added to list");
-            model.addAttribute("users", userService.getAllUsers());
+            model.addAttribute(ATTRIB_NAME, userService.getAllUsers());
             return REDIRECT_TRANSAC;
         }
         logger.info("Error creation User");
@@ -71,7 +72,7 @@ public class UserController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             if (!userService.checkIfUserExistsById(id)) {
-                return "redirect:/user/list";
+                return REDIRECT_TRANSAC;
             }
             User user = userService.getUserById(id);
             user.setPassword("");
@@ -86,7 +87,7 @@ public class UserController {
     // Update User Button
     //@RolesAllowed("ADMIN")
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") User user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid @ValidPassword @ModelAttribute("user") User user,
                              BindingResult result, Model model, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
             logger.info("UPDATE User : KO");
@@ -113,7 +114,7 @@ public class UserController {
                 return REDIRECT_TRANSAC;
             }
             userService.deleteUserById(id);
-            model.addAttribute("users", userService.getAllUsers());
+            model.addAttribute(ATTRIB_NAME, userService.getAllUsers());
             redirAttrs.addFlashAttribute("successDeleteMessage", "User successfully deleted");
         } catch (Exception e) {
             redirAttrs.addFlashAttribute("errorDeleteMessage", "Error during deletion");
