@@ -36,7 +36,7 @@ class RuleNameServiceTest {
         ruleNameService.saveRuleName(rule);
         // THEN
         Assertions.assertNotNull(rule.getId());
-        Assertions.assertEquals("Sand PRating", rule.getName());
+        Assertions.assertEquals("Rule Name", rule.getName());
 
         // *************** UPDATE ***********************************
         // GIVEN

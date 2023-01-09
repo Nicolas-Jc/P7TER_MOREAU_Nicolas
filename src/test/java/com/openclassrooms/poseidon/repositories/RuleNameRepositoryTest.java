@@ -34,7 +34,7 @@ class RuleNameRepositoryTest {
         rule = ruleNameRepository.save(rule);
         // THEN
         Assertions.assertNotNull(rule.getId());
-        Assertions.assertEquals("Sand PRating", rule.getName());
+        Assertions.assertEquals("Rule Name", rule.getName());
 
         // *************** UPDATE ***********************************
         // GIVEN

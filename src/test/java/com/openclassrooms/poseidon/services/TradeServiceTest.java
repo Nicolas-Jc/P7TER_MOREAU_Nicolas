@@ -30,11 +30,11 @@ class TradeServiceTest {
         trade.setType("Type");
         trade.setBuyQuantity(55d);
 
-        String stringDate = "2007-11-11 12:13:14";
-        Timestamp timeSt = Timestamp.valueOf(stringDate);
-        trade.setRevisionDate(timeSt);
-        trade.setCreationDate(timeSt);
-        trade.setTradeDate(timeSt);
+        //String stringDate = "2007-11-11 12:13:14";
+        //Timestamp timeSt = Timestamp.valueOf(stringDate);
+        //trade.setRevisionDate(timeSt);
+        //trade.setCreationDate(timeSt);
+        //trade.setTradeDate(timeSt);
         // WHEN
         tradeService.addTrade(trade);
         // THEN

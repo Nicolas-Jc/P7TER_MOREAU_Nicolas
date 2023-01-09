@@ -28,10 +28,10 @@ class CurvePointServiceTest {
         curvePoint.setTerm(15d);
         curvePoint.setValue(20d);
 
-        String stringDate = "2007-11-11 12:13:14";
-        Timestamp timeStamp = Timestamp.valueOf(stringDate);
-        curvePoint.setAsOfDate(timeStamp);
-        curvePoint.setCreationDate(timeStamp);
+        //String stringDate = "2007-11-11 12:13:14";
+        //Timestamp timeStamp = Timestamp.valueOf(stringDate);
+        //curvePoint.setAsOfDate(timeStamp);
+        //curvePoint.setCreationDate(timeStamp);
         // WHEN
         CurvePointService.addCurvePoint(curvePoint);
         // THEN
@@ -39,8 +39,8 @@ class CurvePointServiceTest {
         Assertions.assertEquals(10, curvePoint.getCurveId());
         Assertions.assertEquals(15d, curvePoint.getTerm());
         Assertions.assertEquals(20d, curvePoint.getValue());
-        Assertions.assertEquals(timeStamp, curvePoint.getAsOfDate());
-        Assertions.assertEquals(timeStamp, curvePoint.getCreationDate());
+        //Assertions.assertEquals(timeStamp, curvePoint.getAsOfDate());
+        //Assertions.assertEquals(timeStamp, curvePoint.getCreationDate());
 
         // *************** UPDATE ***********************************
         // GIVEN

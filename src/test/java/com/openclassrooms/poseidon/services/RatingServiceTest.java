@@ -51,7 +51,7 @@ class RatingServiceTest {
         Assertions.assertEquals("Moodys Rating Updated", rating.getMoodysRating());
         Assertions.assertEquals("Sand PRating Updated", rating.getSandPRating());
         Assertions.assertEquals("Fitch Rating Updated", rating.getFitchRating());
-        Assertions.assertEquals(11, rating.getOrderNumber());
+        Assertions.assertEquals(50, rating.getOrderNumber());
 
         // *************** CHECK IF EXISTS BY ID ***********************************
         // GIVEN

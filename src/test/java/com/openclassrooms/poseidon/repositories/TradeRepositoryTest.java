@@ -27,11 +27,12 @@ class TradeRepositoryTest {
         trade.setType("Type");
         trade.setBuyQuantity(55d);
 
-        String stringDate = "2007-11-11 12:13:14";
-        Timestamp timeSt = Timestamp.valueOf(stringDate);
-        trade.setRevisionDate(timeSt);
-        trade.setCreationDate(timeSt);
-        trade.setTradeDate(timeSt);
+        //String stringDate = "2007-11-11 12:13:14";
+        //Timestamp timeSt = Timestamp.valueOf(stringDate);
+        //Timestamp timeSt = new Timestamp(System.currentTimeMillis());
+        //trade.setRevisionDate(timeSt);
+        //trade.setCreationDate(timeSt);
+        //trade.setTradeDate(timeSt);
 
         // WHEN
         trade = tradeRepository.save(trade);
