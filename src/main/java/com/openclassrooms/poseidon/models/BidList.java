@@ -162,11 +162,22 @@ public class BidList {
     }
 
     public Timestamp getBidListDate() {
-        return bidListDate;
+        //return new Timestamp(bidListDate.getTime());
+        //return bidListDate;
+        if (bidListDate != null) {
+            return new Timestamp(bidListDate.getTime());
+        } else {
+            return null;
+        }
     }
 
     public void setBidListDate(Timestamp bidListDate) {
-        this.bidListDate = bidListDate;
+        //this.bidListDate = bidListDate;
+        if (bidListDate != null) {
+            this.bidListDate = new Timestamp(bidListDate.getTime());
+        } else {
+            this.bidListDate = null;
+        }
     }
 
     public String getCommentary() {
@@ -218,11 +229,21 @@ public class BidList {
     }
 
     public Timestamp getCreationDate() {
-        return creationDate;
+        //return creationDate;
+        if (creationDate != null) {
+            return new Timestamp(creationDate.getTime());
+        } else {
+            return null;
+        }
     }
 
     public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
+        //this.creationDate = creationDate;
+        if (creationDate != null) {
+            this.creationDate = new Timestamp(creationDate.getTime());
+        } else {
+            this.creationDate = null;
+        }
     }
 
     public String getRevisionName() {
@@ -234,11 +255,23 @@ public class BidList {
     }
 
     public Timestamp getRevisionDate() {
-        return revisionDate;
+        //return new Timestamp(revisionDate.getTime());
+        //return revisionDate;
+        if (revisionDate != null) {
+            return new Timestamp(revisionDate.getTime());
+        } else {
+            return null;
+        }
     }
 
     public void setRevisionDate(Timestamp revisionDate) {
-        this.revisionDate = revisionDate;
+        //this.revisionDate = revisionDate;
+        if (revisionDate != null) {
+            this.revisionDate = new Timestamp(revisionDate.getTime());
+        } else {
+            this.revisionDate = null;
+        }
+
     }
 
     public String getDealName() {

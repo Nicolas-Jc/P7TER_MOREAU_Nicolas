@@ -51,11 +51,22 @@ public class CurvePoint {
     }
 
     public Timestamp getAsOfDate() {
-        return asOfDate;
+        //return asOfDate;
+        if (asOfDate != null) {
+            return new Timestamp(asOfDate.getTime());
+        } else {
+            return null;
+        }
     }
 
     public void setAsOfDate(Timestamp asOfDate) {
-        this.asOfDate = asOfDate;
+        //this.asOfDate = asOfDate;
+        if (asOfDate != null) {
+            this.asOfDate = new Timestamp(asOfDate.getTime());
+        } else {
+            this.asOfDate = null;
+        }
+
     }
 
     public Double getTerm() {
@@ -75,10 +86,20 @@ public class CurvePoint {
     }
 
     public Timestamp getCreationDate() {
-        return creationDate;
+        //return creationDate;
+        if (creationDate != null) {
+            return new Timestamp(creationDate.getTime());
+        } else {
+            return null;
+        }
     }
 
     public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
+        //this.creationDate = creationDate;
+        if (creationDate != null) {
+            this.creationDate = new Timestamp(creationDate.getTime());
+        } else {
+            this.creationDate = null;
+        }
     }
 }
