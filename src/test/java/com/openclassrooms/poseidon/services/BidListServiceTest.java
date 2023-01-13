@@ -26,12 +26,6 @@ class BidListServiceTest {
         bid.setAccount("Account Test");
         bid.setType("Type Test");
         bid.setBidQuantity(10d);
-
-        //String stringDate = "2007-11-11 12:13:14";
-        //java.sql.Timestamp timeStamp = java.sql.Timestamp.valueOf(stringDate);
-        //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        //bid.setBidListDate(timeStamp);
-        //bid.setCreationDate(timeStamp);
         // WHEN
         bidListService.addBid(bid);
         // THEN
@@ -40,8 +34,6 @@ class BidListServiceTest {
         Assertions.assertEquals(10d, bid.getBidQuantity());
         Assertions.assertEquals("Type Test", bid.getType());
         Assertions.assertNull(bid.getAskQuantity());
-        //Assertions.assertEquals(timeStamp, bid.getBidListDate());
-        //Assertions.assertEquals(timeStamp, bid.getCreationDate());
 
         // *************** UPDATE ***********************************
         // GIVEN
@@ -70,7 +62,6 @@ class BidListServiceTest {
         // WHEN
         Optional<BidList> bidList = Optional.ofNullable(bidListService.getBidByBidListId(id));
         // THEN
-        //Assertions.assertEquals("update account", bidList.getAccount());
         Assertions.assertTrue(bidList.isPresent());
 
         // *************** FIND ALL ***********************************
@@ -81,7 +72,6 @@ class BidListServiceTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = bid.getBidListId();
         // WHEN
         bidListService.deleteBidById(id);
         // THEN

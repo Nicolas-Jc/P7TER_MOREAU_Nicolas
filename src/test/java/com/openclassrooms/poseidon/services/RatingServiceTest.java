@@ -2,7 +2,6 @@ package com.openclassrooms.poseidon.services;
 
 
 import com.openclassrooms.poseidon.models.Rating;
-import com.openclassrooms.poseidon.repositories.RatingRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import java.util.Optional;
 
 @SpringBootTest
 class RatingServiceTest {
-    @Autowired
-    private RatingRepository ratingRepository;
 
     @Autowired
     private RatingService ratingService;

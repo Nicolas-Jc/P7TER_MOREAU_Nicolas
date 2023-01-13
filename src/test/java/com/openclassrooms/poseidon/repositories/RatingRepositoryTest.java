@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.repositories;
 
 
-import com.openclassrooms.poseidon.models.CurvePoint;
 import com.openclassrooms.poseidon.models.Rating;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +26,6 @@ class RatingRepositoryTest {
         rating.setSandPRating("Sand PRating");
         rating.setFitchRating("Fitch Rating");
         rating.setOrderNumber(11);
-
-        /*String stringDate = "2007-11-11 12:13:14";
-        Timestamp timeStamp = Timestamp.valueOf(stringDate);
-        rating.setAsOfDate(timeStamp);
-        rating.setCreationDate(timeStamp);*/
-
         // WHEN
         rating = ratingRepository.save(rating);
         // THEN
@@ -49,7 +41,6 @@ class RatingRepositoryTest {
         rating.setSandPRating("Sand PRating Updated");
         rating.setFitchRating("Fitch Rating Updated");
         rating.setOrderNumber(50);
-
         // WHEN
         rating = ratingRepository.save(rating);
         // THEN
@@ -74,7 +65,6 @@ class RatingRepositoryTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = curvePoint.getBidListId();
         // WHEN
         ratingRepository.deleteById(id);
         // THEN

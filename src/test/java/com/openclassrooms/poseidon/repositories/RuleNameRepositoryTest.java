@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.repositories;
 
 
-import com.openclassrooms.poseidon.models.Rating;
 import com.openclassrooms.poseidon.models.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +62,6 @@ class RuleNameRepositoryTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = curvePoint.getBidListId();
         // WHEN
         ruleNameRepository.deleteById(id);
         // THEN

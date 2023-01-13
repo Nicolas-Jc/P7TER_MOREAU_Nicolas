@@ -155,7 +155,6 @@ public class Trade {
     }
 
     public Timestamp getTradeDate() {
-        //return tradeDate;
         if (tradeDate != null) {
             return new Timestamp(tradeDate.getTime());
         } else {
@@ -164,7 +163,6 @@ public class Trade {
     }
 
     public void setTradeDate(Timestamp tradeDate) {
-        //this.tradeDate = tradeDate;
         if (tradeDate != null) {
             this.tradeDate = new Timestamp(tradeDate.getTime());
         } else {
@@ -213,7 +211,6 @@ public class Trade {
     }
 
     public Timestamp getCreationDate() {
-        //return creationDate;
         if (creationDate != null) {
             return new Timestamp(creationDate.getTime());
         } else {
@@ -222,7 +219,6 @@ public class Trade {
     }
 
     public void setCreationDate(Timestamp creationDate) {
-        //this.creationDate = creationDate;
         if (creationDate != null) {
             this.creationDate = new Timestamp(creationDate.getTime());
         } else {
@@ -239,7 +235,6 @@ public class Trade {
     }
 
     public Timestamp getRevisionDate() {
-        //return revisionDate;
         if (revisionDate != null) {
             return new Timestamp(revisionDate.getTime());
         } else {
@@ -248,7 +243,6 @@ public class Trade {
     }
 
     public void setRevisionDate(Timestamp revisionDate) {
-        //this.revisionDate = revisionDate;
         if (revisionDate != null) {
             this.revisionDate = new Timestamp(revisionDate.getTime());
         } else {

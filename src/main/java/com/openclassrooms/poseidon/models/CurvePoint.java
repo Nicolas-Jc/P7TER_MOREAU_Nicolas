@@ -51,7 +51,6 @@ public class CurvePoint {
     }
 
     public Timestamp getAsOfDate() {
-        //return asOfDate;
         if (asOfDate != null) {
             return new Timestamp(asOfDate.getTime());
         } else {
@@ -60,7 +59,6 @@ public class CurvePoint {
     }
 
     public void setAsOfDate(Timestamp asOfDate) {
-        //this.asOfDate = asOfDate;
         if (asOfDate != null) {
             this.asOfDate = new Timestamp(asOfDate.getTime());
         } else {
@@ -86,7 +84,6 @@ public class CurvePoint {
     }
 
     public Timestamp getCreationDate() {
-        //return creationDate;
         if (creationDate != null) {
             return new Timestamp(creationDate.getTime());
         } else {
@@ -95,7 +92,6 @@ public class CurvePoint {
     }
 
     public void setCreationDate(Timestamp creationDate) {
-        //this.creationDate = creationDate;
         if (creationDate != null) {
             this.creationDate = new Timestamp(creationDate.getTime());
         } else {

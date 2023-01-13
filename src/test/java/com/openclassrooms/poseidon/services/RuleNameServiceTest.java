@@ -2,7 +2,6 @@ package com.openclassrooms.poseidon.services;
 
 
 import com.openclassrooms.poseidon.models.Rule;
-import com.openclassrooms.poseidon.repositories.RuleNameRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import java.util.Optional;
 
 @SpringBootTest
 class RuleNameServiceTest {
-    @Autowired
-    private RuleNameRepository ruleNameRepository;
 
     @Autowired
     private RuleNameService ruleNameService;

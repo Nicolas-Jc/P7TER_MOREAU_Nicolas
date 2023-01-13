@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +26,6 @@ class BidListRepositoryTest {
         bid.setAccount("Account Test");
         bid.setType("Type Test");
         bid.setBidQuantity(10d);
-
-        //String stringDate = "2007-11-11 12:13:14";
-        //java.sql.Timestamp timeStamp = java.sql.Timestamp.valueOf(stringDate);
-        //Timestamp timeSt = new Timestamp(System.currentTimeMillis());
-        //bid.setBidListDate(timeSt);
-        //bid.setCreationDate(timeSt);
-
         // WHEN
         bid = bidListRepository.save(bid);
         // THEN
@@ -42,9 +34,6 @@ class BidListRepositoryTest {
         Assertions.assertEquals(10d, bid.getBidQuantity());
         Assertions.assertEquals("Type Test", bid.getType());
         Assertions.assertNull(bid.getAskQuantity());
-        //Assertions.assertEquals(timeSt, bid.getBidListDate());
-        //Assertions.assertEquals(timeSt, bid.getCreationDate());
-
 
         // *************** UPDATE ***********************************
         // GIVEN
@@ -70,7 +59,6 @@ class BidListRepositoryTest {
 
         // *************** FIND BIDLIST BY ID ***********************************
         // GIVEN
-        //Integer id2 = bid.getBidListId();
         // WHEN
         BidList bidList = bidListRepository.findByBidListId(id);
         // THEN
@@ -85,7 +73,6 @@ class BidListRepositoryTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = bid.getBidListId();
         // WHEN
         bidListRepository.deleteById(id);
         // THEN

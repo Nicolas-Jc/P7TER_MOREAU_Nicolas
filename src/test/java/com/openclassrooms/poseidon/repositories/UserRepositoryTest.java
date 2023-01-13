@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.repositories;
 
 
-import com.openclassrooms.poseidon.models.Trade;
 import com.openclassrooms.poseidon.models.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +26,6 @@ class UserRepositoryTest {
         user.setPassword("MotdePasse09012023*");
         user.setFullname("FullName");
         user.setRole("ADMIN");
-
         // WHEN
         user = userRepository.save(user);
         // THEN
@@ -76,7 +73,6 @@ class UserRepositoryTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = curvePoint.getBidListId();
         // WHEN
         userRepository.deleteById(id);
         // THEN

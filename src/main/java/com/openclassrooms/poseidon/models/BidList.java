@@ -162,8 +162,6 @@ public class BidList {
     }
 
     public Timestamp getBidListDate() {
-        //return new Timestamp(bidListDate.getTime());
-        //return bidListDate;
         if (bidListDate != null) {
             return new Timestamp(bidListDate.getTime());
         } else {
@@ -172,7 +170,6 @@ public class BidList {
     }
 
     public void setBidListDate(Timestamp bidListDate) {
-        //this.bidListDate = bidListDate;
         if (bidListDate != null) {
             this.bidListDate = new Timestamp(bidListDate.getTime());
         } else {
@@ -229,7 +226,6 @@ public class BidList {
     }
 
     public Timestamp getCreationDate() {
-        //return creationDate;
         if (creationDate != null) {
             return new Timestamp(creationDate.getTime());
         } else {
@@ -238,7 +234,6 @@ public class BidList {
     }
 
     public void setCreationDate(Timestamp creationDate) {
-        //this.creationDate = creationDate;
         if (creationDate != null) {
             this.creationDate = new Timestamp(creationDate.getTime());
         } else {
@@ -255,8 +250,6 @@ public class BidList {
     }
 
     public Timestamp getRevisionDate() {
-        //return new Timestamp(revisionDate.getTime());
-        //return revisionDate;
         if (revisionDate != null) {
             return new Timestamp(revisionDate.getTime());
         } else {
@@ -265,7 +258,6 @@ public class BidList {
     }
 
     public void setRevisionDate(Timestamp revisionDate) {
-        //this.revisionDate = revisionDate;
         if (revisionDate != null) {
             this.revisionDate = new Timestamp(revisionDate.getTime());
         } else {

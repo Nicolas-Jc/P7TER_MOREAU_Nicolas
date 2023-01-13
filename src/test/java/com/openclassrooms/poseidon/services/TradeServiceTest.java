@@ -9,14 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
 class TradeServiceTest {
-    @Autowired
-    private TradeRepository tradeRepository;
+
     @Autowired
     private TradeService tradeService;
 
@@ -29,12 +27,6 @@ class TradeServiceTest {
         trade.setAccount("Trade Account");
         trade.setType("Type");
         trade.setBuyQuantity(55d);
-
-        //String stringDate = "2007-11-11 12:13:14";
-        //Timestamp timeSt = Timestamp.valueOf(stringDate);
-        //trade.setRevisionDate(timeSt);
-        //trade.setCreationDate(timeSt);
-        //trade.setTradeDate(timeSt);
         // WHEN
         tradeService.addTrade(trade);
         // THEN

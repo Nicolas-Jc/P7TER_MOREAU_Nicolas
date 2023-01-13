@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +25,6 @@ class CurvePointRepositoryTest {
         curvePoint.setCurveId(10);
         curvePoint.setTerm(15d);
         curvePoint.setValue(20d);
-
-        //String stringDate = "2007-11-11 12:13:14";
-        //Timestamp timeStamp = Timestamp.valueOf(stringDate);
-        //Timestamp timeSt = new Timestamp(System.currentTimeMillis());
-        //curvePoint.setAsOfDate(timeSt);
-        //curvePoint.setCreationDate(timeSt);
-
         // WHEN
         curvePoint = curvePointRepository.save(curvePoint);
         // THEN
@@ -40,9 +32,6 @@ class CurvePointRepositoryTest {
         Assertions.assertEquals(10, curvePoint.getCurveId());
         Assertions.assertEquals(15d, curvePoint.getTerm());
         Assertions.assertEquals(20d, curvePoint.getValue());
-        //Assertions.assertEquals(timeSt, curvePoint.getAsOfDate());
-        //Assertions.assertEquals(timeSt, curvePoint.getCreationDate());
-
 
         // *************** UPDATE ***********************************
         // GIVEN
@@ -72,7 +61,6 @@ class CurvePointRepositoryTest {
 
         // *************** DELETE ***********************************
         // GIVEN
-        //Integer id3 = curvePoint.getBidListId();
         // WHEN
         curvePointRepository.deleteById(id);
         // THEN
