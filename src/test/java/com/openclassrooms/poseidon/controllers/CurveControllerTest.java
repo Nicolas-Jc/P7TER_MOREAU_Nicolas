@@ -55,7 +55,8 @@ public class CurveControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestCurvePointViewTest() throws Exception {
         // GIVEN
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String input = "2007-11-11 12:13:14";
+        Timestamp timestamp = Timestamp.valueOf(input);
 
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setId(1);
@@ -98,7 +99,8 @@ public class CurveControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void postRequestCurvePointValidateTest() throws Exception {
         // GIVEN
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String input = "2007-11-11 12:13:14";
+        Timestamp timestamp = Timestamp.valueOf(input);
 
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setId(1);
@@ -139,7 +141,8 @@ public class CurveControllerTest {
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestCurvePointUpdateTest() throws Exception {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String input = "2007-11-11 12:13:14";
+        Timestamp timestamp = Timestamp.valueOf(input);
 
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setId(1);
@@ -172,7 +175,8 @@ public class CurveControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void postRequestCurvePointUpdateTest() throws Exception {
         // GIVEN
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String input = "2007-11-11 12:13:14";
+        Timestamp timestamp = Timestamp.valueOf(input);
 
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setId(1);
@@ -213,7 +217,8 @@ public class CurveControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestCurvePointDeleteTest() throws Exception {
         // GIVEN
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String input = "2007-11-11 12:13:14";
+        Timestamp timestamp = Timestamp.valueOf(input);
 
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setId(1);
