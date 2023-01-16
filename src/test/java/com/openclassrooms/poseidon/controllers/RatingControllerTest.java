@@ -122,7 +122,7 @@ public class RatingControllerTest {
                         .param("sandPRating", "Sand PRating")
                         .param("fitchRating", "Fitch Rating")
                         .param("orderNumber", "100"))
-                //3. Assert
+                // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/rating/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
