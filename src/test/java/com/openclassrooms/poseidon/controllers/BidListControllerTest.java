@@ -212,6 +212,7 @@ public class BidListControllerTest {
         List<BidList> bidList = new ArrayList<>();
         bidList.add(bidModel);
 
+        
         doReturn(true)
                 .when(bidListService)
                 .checkIfIdExists(bidModel.getBidListId());
