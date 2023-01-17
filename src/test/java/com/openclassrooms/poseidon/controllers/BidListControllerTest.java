@@ -110,6 +110,9 @@ public class BidListControllerTest {
         bidList.add(bid);
 
         // we set the result of the mocked service
+        // doNothing() is used when you want to test void methods
+        // because void methods do not return anything
+        // so there is no way you can verify using assert.
         doNothing()
                 .when(bidListService)
                 .addBid(bid);
@@ -212,7 +215,7 @@ public class BidListControllerTest {
         List<BidList> bidList = new ArrayList<>();
         bidList.add(bidModel);
 
-        
+
         doReturn(true)
                 .when(bidListService)
                 .checkIfIdExists(bidModel.getBidListId());

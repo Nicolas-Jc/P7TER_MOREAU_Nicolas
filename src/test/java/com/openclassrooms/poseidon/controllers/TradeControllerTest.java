@@ -54,9 +54,6 @@ public class TradeControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestTradeViewTest() throws Exception {
         // GIVEN
-        String input = "2007-11-11 12:13:14";
-        Timestamp timestamp = Timestamp.valueOf(input);
-
         Trade trade = new Trade();
         trade.setTradeId(1);
         trade.setAccount("Account");
@@ -70,11 +67,11 @@ public class TradeControllerTest {
                 .when(tradeService)
                 .getAllTrades();
         // WHEN
-        mockMvc.perform(get("/ruleName/list"))
+        mockMvc.perform(get("/trade/list"))
                 // THEN
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("ruleName/list"))
-                .andExpect(model().attributeExists("ruleName"))
+                .andExpect(view().name("trade/list"))
+                .andExpect(model().attributeExists("trade"))
                 .andReturn();
         assertEquals("Account", tradeList.get(0).getAccount());
     }
@@ -96,9 +93,6 @@ public class TradeControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void postRequestTradeValidateTest() throws Exception {
         // GIVEN
-        String input = "2007-11-11 12:13:14";
-        Timestamp timestamp = Timestamp.valueOf(input);
-
         Trade trade = new Trade();
         trade.setTradeId(1);
         trade.setAccount("Account");
@@ -137,9 +131,6 @@ public class TradeControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestTradeUpdateTest() throws Exception {
         // GIVEN
-        String input = "2007-11-11 12:13:14";
-        Timestamp timestamp = Timestamp.valueOf(input);
-
         Trade trade = new Trade();
         trade.setTradeId(1);
         trade.setAccount("Account");
@@ -169,9 +160,6 @@ public class TradeControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void postRequestTradeUpdateTest() throws Exception {
         // GIVEN
-        String input = "2007-11-11 12:13:14";
-        Timestamp timestamp = Timestamp.valueOf(input);
-
         Trade trade = new Trade();
         trade.setTradeId(1);
         trade.setAccount("Account");
@@ -207,11 +195,8 @@ public class TradeControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
-    public void getRequestTradeDeleteTest() throws Exception {
+    public void getRequestUserDeleteTest() throws Exception {
         // GIVEN
-        String input = "2007-11-11 12:13:14";
-        Timestamp timestamp = Timestamp.valueOf(input);
-
         Trade trade = new Trade();
         trade.setTradeId(1);
         trade.setAccount("Account");

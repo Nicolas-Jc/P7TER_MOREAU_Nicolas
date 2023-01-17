@@ -144,6 +144,7 @@
                 <configuration>
                     <excludes>
                         <exclude>com/openclassrooms/poseidon/models/**</exclude>
+                        <exclude>com/openclassrooms/**/PoseidonApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
