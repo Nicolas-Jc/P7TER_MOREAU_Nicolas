@@ -1,36 +1,28 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.Rating;
 import com.openclassrooms.poseidon.models.Rule;
-import com.openclassrooms.poseidon.services.RatingService;
+import com.openclassrooms.poseidon.services.CustomUserDetailsService;
 import com.openclassrooms.poseidon.services.RuleNameService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = RuleNameController.class)
 public class RuleNameControllerTest {
 
     // we mock the service, here we test only the controller
@@ -38,19 +30,16 @@ public class RuleNameControllerTest {
     @MockBean
     RuleNameService ruleNameService;
 
-    @Autowired
-    private WebApplicationContext webContext;
+    @MockBean
+    @SuppressWarnings("unused")
+    private CustomUserDetailsService userDetailsService;
 
     // we inject the server side Spring MVC test support
+    @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setupMockmvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
-    }
-
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRuleNameViewTest() throws Exception {
         // GIVEN
         Rule rule = new Rule();
@@ -75,11 +64,11 @@ public class RuleNameControllerTest {
                 .andExpect(view().name("ruleName/list"))
                 .andExpect(model().attributeExists("ruleName"))
                 .andReturn();
-        assertEquals("SqlPart", ruleList.get(0).getSqlPart());
+        Assertions.assertEquals("SqlPart", ruleList.get(0).getSqlPart());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRuleNameAddViewTest() throws Exception {
         // GIVEN
         // WHEN
@@ -92,7 +81,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestRuleNameValidateTest() throws Exception {
         // GIVEN
         Rule rule = new Rule();
@@ -126,17 +115,18 @@ public class RuleNameControllerTest {
                         .param("json", "Json")
                         .param("template", "Template")
                         .param("sqlStr", "SqlStr")
-                        .param("sqlPart", "SqlPart"))
+                        .param("sqlPart", "SqlPart")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/ruleName/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
                 .andReturn();
-        assertEquals("SqlPart", ruleList.get(0).getSqlPart());
+        Assertions.assertEquals("SqlPart", ruleList.get(0).getSqlPart());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRuleNameUpdateTest() throws Exception {
         // GIVEN
         Rule rule = new Rule();
@@ -163,12 +153,12 @@ public class RuleNameControllerTest {
                 .andExpect(view().name("ruleName/update"))
                 .andExpect(model().attributeExists("ruleName"))
                 .andReturn();
-        assertEquals("SqlPart", rule.getSqlPart());
+        Assertions.assertEquals("SqlPart", rule.getSqlPart());
 
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestRuleNameUpdateTest() throws Exception {
         // GIVEN
         Rule rule = new Rule();
@@ -201,17 +191,18 @@ public class RuleNameControllerTest {
                         .param("json", "Json")
                         .param("template", "Template")
                         .param("sqlStr", "SqlStr")
-                        .param("sqlPart", "SqlPart"))
+                        .param("sqlPart", "SqlPart")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/ruleName/list"))
                 .andExpect(flash().attributeExists("successUpdateMessage"))
                 .andReturn();
-        assertEquals("SqlPart", ruleList.get(0).getSqlPart());
+        Assertions.assertEquals("SqlPart", ruleList.get(0).getSqlPart());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRuleNameDeleteTest() throws Exception {
         // GIVEN
         Rule rule = new Rule();
@@ -243,7 +234,7 @@ public class RuleNameControllerTest {
                 .andExpect(view().name("redirect:/ruleName/list"))
                 .andExpect(flash().attributeExists("successDeleteMessage"))
                 .andReturn();
-        assertEquals(1, (int) ruleList.get(0).getId());
+        Assertions.assertEquals(1, (int) ruleList.get(0).getId());
     }
 
 }

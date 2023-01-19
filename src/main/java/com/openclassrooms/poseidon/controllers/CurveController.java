@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.CurvePoint;
-import com.openclassrooms.poseidon.repositories.CurvePointRepository;
 import com.openclassrooms.poseidon.services.CurvePointService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +20,8 @@ import java.security.Principal;
 @Controller
 public class CurveController {
 
-    @Autowired
-    CurvePointRepository curvePointRepository;
+    //@Autowired
+    //CurvePointRepository curvePointRepository;
 
     @Autowired
     CurvePointService curvePointService;

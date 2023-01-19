@@ -2,42 +2,28 @@ package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.BidList;
 import com.openclassrooms.poseidon.services.BidListService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.openclassrooms.poseidon.services.CustomUserDetailsService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// SpringRunner is an alias of SpringJUnit4ClassRunner
-// it's a Spring extension of JUnit that handles the TestContext
-// The SpringBootTest annotation can be used to run a Spring Boot application as a test,
-// and provides the following features:
-// - It loads the Spring application context for the test.
-// - It can be used to test a slice of the application, including just the controllers, or the whole application.
-// - It can be used to test a single layer (e.g., only the controllers) or the whole application (all layers).
-// Spring will charge this bean MockMvc to provide a checker of all of your endpoints.
-@AutoConfigureMockMvc
-@SpringBootTest
-@RunWith(SpringRunner.class)
+
+@WebMvcTest(controllers = BidListController.class)
 public class BidListControllerTest {
 
     // we mock the service, here we test only the controller
@@ -45,19 +31,16 @@ public class BidListControllerTest {
     @MockBean
     BidListService bidListService;
 
-    @Autowired
-    private WebApplicationContext webContext;
+    @MockBean
+    @SuppressWarnings("unused")
+    private CustomUserDetailsService userDetailsService;
 
     // we inject the server side Spring MVC test support
+    @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setupMockmvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
-    }
-
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestBidListViewTest() throws Exception {
         // GIVEN
         BidList bid = new BidList();
@@ -74,17 +57,19 @@ public class BidListControllerTest {
                 .when(bidListService)
                 .getAllBids();
         // WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/bidList/list"))
+        mockMvc.perform(get("/bidList/list")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("bidList/list"))
                 .andExpect(model().attributeExists("bidList"))
                 .andReturn();
-        assertEquals("Account Test", bidList.get(0).getAccount());
+        Assertions.assertEquals("Account Test", bidList.get(0).getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
+    //@WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestBidListAddViewTest() throws Exception {
         // GIVEN
         // WHEN
@@ -97,7 +82,8 @@ public class BidListControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
+    //@WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void postRequestBidListValidateTest() throws Exception {
         // GIVEN
         BidList bid = new BidList();
@@ -123,22 +109,24 @@ public class BidListControllerTest {
         // the test is executed:
         // perform: it executes the request and returns a ResultActions object
         // andExpect: ResultMatcher object that defines some expectations
-        mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        mockMvc.perform(post("/bidList/validate")
                         .flashAttr("successSaveMessage", "Bid successfully added to list")
                         .param("bidListId", "1")
                         .param("account", "Account Test")
                         .param("type", "Type Test")
-                        .param("bidQuantity", "10"))
+                        .param("bidQuantity", "10")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/bidList/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
                 .andReturn();
-        assertEquals("Account Test", bidList.get(0).getAccount());
+        Assertions.assertEquals("Account Test", bidList.get(0).getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
+    //@WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestBidListUpdateTest() throws Exception {
         // GIVEN
         BidList bid = new BidList();
@@ -162,11 +150,11 @@ public class BidListControllerTest {
                 .andExpect(view().name("bidList/update"))
                 .andExpect(model().attributeExists("bidList"))
                 .andReturn();
-        assertEquals("Account Test", bid.getAccount());
+        Assertions.assertEquals("Account Test", bid.getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestBidListUpdateTest() throws Exception {
         // WHEN
         BidList bid = new BidList();
@@ -188,22 +176,24 @@ public class BidListControllerTest {
                 .when(bidListService)
                 .getAllBids();
         // WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/{id}", "1")
+        mockMvc.perform(post("/bidList/update/{id}", "1")
                         .flashAttr("successUpdateMessage", "Bid successfully updated")
                         .param("bidListId", "1")
                         .param("account", "Account Test")
                         .param("type", "Type Test")
-                        .param("bidQuantity", "10"))
+                        .param("bidQuantity", "10")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/bidList/list"))
                 .andExpect(flash().attributeExists("successUpdateMessage"))
                 .andReturn();
-        assertEquals("Account Test", bidList.get(0).getAccount());
+        Assertions.assertEquals("Account Test", bidList.get(0).getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
+    //@WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void getRequestBidListDeleteTest() throws Exception {
         // GIVEN
         BidList bidModel = new BidList();
@@ -214,7 +204,6 @@ public class BidListControllerTest {
 
         List<BidList> bidList = new ArrayList<>();
         bidList.add(bidModel);
-
 
         doReturn(true)
                 .when(bidListService)
@@ -233,6 +222,6 @@ public class BidListControllerTest {
                 .andExpect(view().name("redirect:/bidList/list"))
                 .andExpect(flash().attributeExists("successDeleteMessage"))
                 .andReturn();
-        assertEquals("Account Test", bidList.get(0).getAccount());
+        Assertions.assertEquals("Account Test", bidList.get(0).getAccount());
     }
 }

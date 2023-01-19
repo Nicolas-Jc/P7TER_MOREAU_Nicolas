@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.Trade;
-import com.openclassrooms.poseidon.repositories.TradeRepository;
 import com.openclassrooms.poseidon.services.TradeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,8 +25,8 @@ public class TradeController {
     private static final String TRADE_NOT_EXISTS = "Trade {} not exists ! : ";
 
 
-    @Autowired
-    TradeRepository tradeRepository;
+    //@Autowired
+    //TradeRepository tradeRepository;
 
     @Autowired
     TradeService tradeService;

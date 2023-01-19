@@ -1,37 +1,28 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.CurvePoint;
 import com.openclassrooms.poseidon.models.Rating;
-import com.openclassrooms.poseidon.services.CurvePointService;
+import com.openclassrooms.poseidon.services.CustomUserDetailsService;
 import com.openclassrooms.poseidon.services.RatingService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = RatingController.class)
 public class RatingControllerTest {
 
     // we mock the service, here we test only the controller
@@ -39,19 +30,17 @@ public class RatingControllerTest {
     @MockBean
     RatingService ratingService;
 
-    @Autowired
-    private WebApplicationContext webContext;
+    @MockBean
+    @SuppressWarnings("unused")
+    private CustomUserDetailsService userDetailsService;
 
     // we inject the server side Spring MVC test support
+    @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setupMockmvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
-    }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRatingViewTest() throws Exception {
         // GIVEN
         Rating rating = new Rating();
@@ -74,11 +63,11 @@ public class RatingControllerTest {
                 .andExpect(view().name("rating/list"))
                 .andExpect(model().attributeExists("rating"))
                 .andReturn();
-        assertEquals(100, (int) ratingList.get(0).getOrderNumber());
+        Assertions.assertEquals(100, (int) ratingList.get(0).getOrderNumber());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRatingAddViewTest() throws Exception {
         // GIVEN
         // WHEN
@@ -91,7 +80,7 @@ public class RatingControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestRatingValidateTest() throws Exception {
         // GIVEN
         Rating rating = new Rating();
@@ -121,17 +110,18 @@ public class RatingControllerTest {
                         .param("moodysRating", "Moodys Rating")
                         .param("sandPRating", "Sand PRating")
                         .param("fitchRating", "Fitch Rating")
-                        .param("orderNumber", "100"))
+                        .param("orderNumber", "100")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/rating/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
                 .andReturn();
-        assertEquals(100, (int) ratingList.get(0).getOrderNumber());
+        Assertions.assertEquals(100, (int) ratingList.get(0).getOrderNumber());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRatingUpdateTest() throws Exception {
         // GIVEN
         Rating rating = new Rating();
@@ -156,12 +146,12 @@ public class RatingControllerTest {
                 .andExpect(view().name("rating/update"))
                 .andExpect(model().attributeExists("rating"))
                 .andReturn();
-        assertEquals(100, (int) rating.getOrderNumber());
+        Assertions.assertEquals(100, (int) rating.getOrderNumber());
 
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestRatingUpdateTest() throws Exception {
         // GIVEN
         Rating rating = new Rating();
@@ -190,17 +180,18 @@ public class RatingControllerTest {
                         .param("moodysRating", "Moodys Rating")
                         .param("sandPRating", "Sand PRating")
                         .param("fitchRating", "Fitch Rating")
-                        .param("orderNumber", "100"))
+                        .param("orderNumber", "100")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/rating/list"))
                 .andExpect(flash().attributeExists("successUpdateMessage"))
                 .andReturn();
-        assertEquals(100, (int) ratingList.get(0).getOrderNumber());
+        Assertions.assertEquals(100, (int) ratingList.get(0).getOrderNumber());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestRatingDeleteTest() throws Exception {
         // GIVEN
         Rating rating = new Rating();
@@ -230,6 +221,6 @@ public class RatingControllerTest {
                 .andExpect(view().name("redirect:/rating/list"))
                 .andExpect(flash().attributeExists("successDeleteMessage"))
                 .andReturn();
-        assertEquals(1, (int) ratingList.get(0).getId());
+        Assertions.assertEquals(1, (int) ratingList.get(0).getId());
     }
 }

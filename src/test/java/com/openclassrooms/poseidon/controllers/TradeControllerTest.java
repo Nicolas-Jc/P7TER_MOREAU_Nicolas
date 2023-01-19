@@ -1,37 +1,28 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.Rule;
 import com.openclassrooms.poseidon.models.Trade;
-import com.openclassrooms.poseidon.services.RuleNameService;
+import com.openclassrooms.poseidon.services.CustomUserDetailsService;
 import com.openclassrooms.poseidon.services.TradeService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = TradeController.class)
 public class TradeControllerTest {
 
     // we mock the service, here we test only the controller
@@ -39,19 +30,16 @@ public class TradeControllerTest {
     @MockBean
     TradeService tradeService;
 
-    @Autowired
-    private WebApplicationContext webContext;
+    @MockBean
+    @SuppressWarnings("unused")
+    private CustomUserDetailsService userDetailsService;
 
     // we inject the server side Spring MVC test support
+    @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setupMockmvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
-    }
-
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestTradeViewTest() throws Exception {
         // GIVEN
         Trade trade = new Trade();
@@ -73,11 +61,11 @@ public class TradeControllerTest {
                 .andExpect(view().name("trade/list"))
                 .andExpect(model().attributeExists("trade"))
                 .andReturn();
-        assertEquals("Account", tradeList.get(0).getAccount());
+        Assertions.assertEquals("Account", tradeList.get(0).getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestTradeAddViewTest() throws Exception {
         // GIVEN
         // WHEN
@@ -90,7 +78,7 @@ public class TradeControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestTradeValidateTest() throws Exception {
         // GIVEN
         Trade trade = new Trade();
@@ -118,17 +106,18 @@ public class TradeControllerTest {
                         .param("tradeId", "1")
                         .param("account", "Account")
                         .param("type", "Type")
-                        .param("buyQuantity", "100"))
+                        .param("buyQuantity", "100")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/trade/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
                 .andReturn();
-        assertEquals("Account", tradeList.get(0).getAccount());
+        Assertions.assertEquals("Account", tradeList.get(0).getAccount());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestTradeUpdateTest() throws Exception {
         // GIVEN
         Trade trade = new Trade();
@@ -152,12 +141,12 @@ public class TradeControllerTest {
                 .andExpect(view().name("trade/update"))
                 .andExpect(model().attributeExists("trade"))
                 .andReturn();
-        assertEquals("Account", trade.getAccount());
+        Assertions.assertEquals("Account", trade.getAccount());
 
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestTradeUpdateTest() throws Exception {
         // GIVEN
         Trade trade = new Trade();
@@ -184,17 +173,18 @@ public class TradeControllerTest {
                         .param("tradeId", "1")
                         .param("account", "Account")
                         .param("Type", "Type")
-                        .param("buyQuantity", "100"))
+                        .param("buyQuantity", "100")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/trade/list"))
                 .andExpect(flash().attributeExists("successUpdateMessage"))
                 .andReturn();
-        assertEquals("Type", tradeList.get(0).getType());
+        Assertions.assertEquals("Type", tradeList.get(0).getType());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestUserDeleteTest() throws Exception {
         // GIVEN
         Trade trade = new Trade();
@@ -223,7 +213,7 @@ public class TradeControllerTest {
                 .andExpect(view().name("redirect:/trade/list"))
                 .andExpect(flash().attributeExists("successDeleteMessage"))
                 .andReturn();
-        assertEquals("Type", tradeList.get(0).getType());
+        Assertions.assertEquals("Type", tradeList.get(0).getType());
     }
 
 }

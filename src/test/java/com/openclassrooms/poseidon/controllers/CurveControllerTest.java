@@ -1,38 +1,29 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.models.BidList;
 import com.openclassrooms.poseidon.models.CurvePoint;
-import com.openclassrooms.poseidon.services.BidListService;
 import com.openclassrooms.poseidon.services.CurvePointService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.openclassrooms.poseidon.services.CustomUserDetailsService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = CurveController.class)
 public class CurveControllerTest {
 
     // we mock the service, here we test only the controller
@@ -40,19 +31,17 @@ public class CurveControllerTest {
     @MockBean
     CurvePointService curvePointService;
 
-    @Autowired
-    private WebApplicationContext webContext;
+    @MockBean
+    @SuppressWarnings("unused")
+    private CustomUserDetailsService userDetailsService;
 
     // we inject the server side Spring MVC test support
+    @Autowired
     private MockMvc mockMvc;
 
-    @Before
-    public void setupMockmvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
-    }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestCurvePointViewTest() throws Exception {
         // GIVEN
         String input = "2007-11-11 12:13:14";
@@ -73,17 +62,18 @@ public class CurveControllerTest {
                 .when(curvePointService)
                 .getAllCurvePoints();
         // WHEN
-        mockMvc.perform(get("/curvePoint/list"))
+        mockMvc.perform(get("/curvePoint/list")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("curvePoint/list"))
                 .andExpect(model().attributeExists("curvePoint"))
                 .andReturn();
-        assertEquals(10, (int) curvePointList.get(0).getCurveId());
+        Assertions.assertEquals(10, (int) curvePointList.get(0).getCurveId());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestCurvePointAddViewTest() throws Exception {
         // GIVEN
         // WHEN
@@ -96,7 +86,7 @@ public class CurveControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestCurvePointValidateTest() throws Exception {
         // GIVEN
         String input = "2007-11-11 12:13:14";
@@ -129,17 +119,18 @@ public class CurveControllerTest {
                         .param("id", "1")
                         .param("curveId", "10")
                         .param("term", "30D")
-                        .param("value", "40D"))
+                        .param("value", "40D")
+                        .with(csrf()))
                 //3. Assert
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/curvePoint/list"))
                 .andExpect(flash().attributeExists("successSaveMessage"))
                 .andReturn();
-        assertEquals(10, (int) curvePointList.get(0).getCurveId());
+        Assertions.assertEquals(10, (int) curvePointList.get(0).getCurveId());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestCurvePointUpdateTest() throws Exception {
         String input = "2007-11-11 12:13:14";
         Timestamp timestamp = Timestamp.valueOf(input);
@@ -167,12 +158,12 @@ public class CurveControllerTest {
                 .andExpect(view().name("curvePoint/update"))
                 .andExpect(model().attributeExists("curvePoint"))
                 .andReturn();
-        assertEquals(10, (int) curvePoint.getCurveId());
+        Assertions.assertEquals(10, (int) curvePoint.getCurveId());
 
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void postRequestCurvePointUpdateTest() throws Exception {
         // GIVEN
         String input = "2007-11-11 12:13:14";
@@ -204,17 +195,18 @@ public class CurveControllerTest {
                         .param("id", "1")
                         .param("curveId", "10")
                         .param("term", "30D")
-                        .param("value", "40D"))
+                        .param("value", "40D")
+                        .with(csrf()))
                 // THEN
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/curvePoint/list"))
                 .andExpect(flash().attributeExists("successUpdateMessage"))
                 .andReturn();
-        assertEquals(10, (int) curvePointList.get(0).getCurveId());
+        Assertions.assertEquals(10, (int) curvePointList.get(0).getCurveId());
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser
     public void getRequestCurvePointDeleteTest() throws Exception {
         // GIVEN
         String input = "2007-11-11 12:13:14";
@@ -249,7 +241,7 @@ public class CurveControllerTest {
                 .andExpect(view().name("redirect:/curvePoint/list"))
                 .andExpect(flash().attributeExists("successDeleteMessage"))
                 .andReturn();
-        assertEquals(10, (int) curvePointList.get(0).getCurveId());
+        Assertions.assertEquals(10, (int) curvePointList.get(0).getCurveId());
     }
 }
 

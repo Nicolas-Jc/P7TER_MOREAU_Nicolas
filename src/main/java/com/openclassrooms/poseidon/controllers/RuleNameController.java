@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.Rule;
-import com.openclassrooms.poseidon.repositories.RuleNameRepository;
 import com.openclassrooms.poseidon.services.RuleNameService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,8 +25,8 @@ public class RuleNameController {
     private static final String REDIRECT_TRANSAC = "redirect:/ruleName/list";
     private static final String RULE_NOT_EXISTS = "Rule {} not exists ! : ";
 
-    @Autowired
-    RuleNameRepository ruleNameRepository;
+    //@Autowired
+    //RuleNameRepository ruleNameRepository;
 
     @Autowired
     RuleNameService ruleNameService;

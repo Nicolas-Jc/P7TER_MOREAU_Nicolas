@@ -1,7 +1,6 @@
 package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.Rating;
-import com.openclassrooms.poseidon.repositories.RatingRepository;
 import com.openclassrooms.poseidon.services.RatingService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,8 +27,8 @@ public class RatingController {
     private static final String RATING_NOT_EXISTS = "Rating {} not exists ! : ";
 
 
-    @Autowired
-    RatingRepository ratingRepository;
+    //@Autowired
+    //RatingRepository ratingRepository;
 
     @Autowired
     RatingService ratingService;
