@@ -2,29 +2,23 @@ package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.models.BidList;
 import com.openclassrooms.poseidon.services.BidListService;
-import com.openclassrooms.poseidon.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class BidListController {
 
     @Autowired
     private BidListService bidListService;
-
-    @Autowired
-    private UserService userService;
 
     private static final Logger logger = LogManager.getLogger(BidListController.class);
 
@@ -37,8 +31,9 @@ public class BidListController {
     // return view containing all Bids
 
     @GetMapping("/bidList/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute(ATTRIB_NAME, bidListService.getAllBids());
+        model.addAttribute("username", principal.getName());
         logger.info("BidList Data loading");
         return "bidList/list";
     }

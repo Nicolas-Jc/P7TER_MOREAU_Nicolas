@@ -8,22 +8,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-//@RequestMapping("app")
 public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
 
-
-    @GetMapping("secure/article-details")
-    public ModelAndView getAllUserArticles() {
+    @GetMapping("/login")
+    public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userRepository.findAll());
-        mav.setViewName("user/list");
+        mav.setViewName("login");
         return mav;
     }
 
-    @GetMapping("error")
+    @GetMapping("/error")
     public ModelAndView error() {
         ModelAndView mav = new ModelAndView();
         String errorMessage = "You are not authorized for the requested data.";

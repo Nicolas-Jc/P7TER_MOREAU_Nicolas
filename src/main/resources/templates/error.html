@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Connection error - Not authorized</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-outer">
+    <div class="container">
+        <div>
+            <div style="text-align: center;">
+                <div class="container-error">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="error-template">
+                                <h1>Oops!</h1>
+                                <h2 class="alert alert-danger">Access Denied </h2>
+                                <div class="error-details"><p>Sorry, an error has occured,</p>
+                                    <p>No authorization to access this page !</p>
+                                </div>
+                                <div class="error-actions">
+                                    <div class="error-details"><p>Sign In again!..</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <form th:action="@{/app-logout}" method="POST">
+                                        <input class="btn btn-primary btn-sm" type="submit" value="Sign"/>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

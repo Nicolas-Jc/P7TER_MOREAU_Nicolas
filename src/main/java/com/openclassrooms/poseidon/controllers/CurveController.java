@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class CurveController {
@@ -35,8 +36,9 @@ public class CurveController {
     // return view containing all CurvePoint
     @GetMapping("/curvePoint/list")
     //@RequestMapping("/curvePoint/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute(ATTRIB_NAME, curvePointService.getAllCurvePoints());
+        model.addAttribute("username", principal.getName());
         logger.info("CurvePoint List Data loading");
         return "curvePoint/list";
     }

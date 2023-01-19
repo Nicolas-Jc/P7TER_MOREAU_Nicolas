@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class RatingController {
@@ -37,8 +38,9 @@ public class RatingController {
     // return view containing all Ratings
     @GetMapping("/rating/list")
     //@RequestMapping("/rating/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute(ATTRIB_NAME, ratingService.getAllRatings());
+        model.addAttribute("username", principal.getName());
         logger.info("Rating List Data loading");
         return "rating/list";
     }

@@ -8,9 +8,22 @@
 </head>
 <body>
 <div class="container">
-    <!-- Navigation -->
-    <div th:replace="fragment/fragment.html :: navigation"></div>
-    
+    <div class="row">
+        <div class="col-6">
+            <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+            <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+            <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+            <a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+            <a href="/ruleName/list">Rule</a>
+        </div>
+        <div class="col-6 text-right">
+            Logged in user: <b th:inline="text" class="user" th:text="${username}"> </b>
+            <form th:action="@{/app-logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+
     <div class="row"><h2>Bid List</h2></div>
     <p class="alert alert-danger" th:if="${!#strings.isEmpty(errorDeleteMessage)}" th:text="${errorDeleteMessage}"></p>
     <p class="alert alert-success" th:if="${!#strings.isEmpty(successDeleteMessage)}"

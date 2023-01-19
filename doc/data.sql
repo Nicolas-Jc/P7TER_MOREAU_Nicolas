@@ -99,3 +99,6 @@ create table users
     role     varchar(255) not null,
     username varchar(255) not null
 );
+
+insert into Users(id, fullname, username, password, role) values(001,"Administrator", "Administrator", "$2a$10$0X4J86GfuPmafPhaUA8aheG5eRX59Kt.e4HhWGpO0L5Pi5reVZ0Ae", "ADMIN");
+insert into Users(id, fullname, username, password, role) values(002,"UserPoseidon", "UserPoseidon", "$2a$10$A/sxerDP4uLub3oGXyv3CuZSCG33leIPD4WtN0FdS9F1oI.JRqcU6", "USER")

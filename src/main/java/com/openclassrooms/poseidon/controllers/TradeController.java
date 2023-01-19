@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class TradeController {
@@ -34,8 +35,9 @@ public class TradeController {
     // return view containing all Trades
     @GetMapping("/trade/list")
     //@RequestMapping("/trade/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute(ATTRIB_NAME, tradeService.getAllTrades());
+        model.addAttribute("username", principal.getName());
         logger.info("Trade List Data loading");
         return "trade/list";
     }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class RuleNameController {
@@ -34,8 +35,9 @@ public class RuleNameController {
     // return view containing all Rules
     @GetMapping("/ruleName/list")
     //@RequestMapping("/ruleName/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute(ATTRIB_NAME, ruleNameService.getAllRuleNames());
+        model.addAttribute("username", principal.getName());
         logger.info("Rules List Data loading");
         return "ruleName/list";
     }

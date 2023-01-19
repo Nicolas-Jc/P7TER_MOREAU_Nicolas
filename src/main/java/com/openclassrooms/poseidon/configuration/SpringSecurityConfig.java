@@ -19,50 +19,35 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
-                .antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**").permitAll()
-                //.hasAuthority("ADMIN")
-                //.hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/login/**").permitAll()
+                //Permit access to all for the login and main home page
+                .antMatchers("/", "/login").permitAll()
+                //Permit access to /user/* to only users with Authority ADMIN
+                .antMatchers("/user/*").hasAuthority("ADMIN")
+                //Permit access for bootstrap
                 .antMatchers("/resources/**").permitAll()
-                //.anyRequest().authenticated()
-                //.and().formLogin().loginPage("/login").permitAll()
-                .and()
-                .formLogin().defaultSuccessUrl("/bidList/list")
-                .and()
-                .oauth2Login().defaultSuccessUrl("/bidList/list")
-                .and()
-                .logout().logoutUrl("/app-logout").logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling().accessDeniedPage("/app/error");
-
-
-        // ***************************************************************************
-        /*
-                //.antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
-                //.hasAnyAuthority("ADMIN", "USER", "ROLE_USER")
-                .antMatchers("/user/list").hasAuthority("ADMIN")
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                //Authentication request parameters
                 .anyRequest().authenticated()
-                //.and().formLogin().loginPage("/login").permitAll()
                 .and()
-                .formLogin().defaultSuccessUrl("/bidList/list")
+                .formLogin()
+                //Definition of the default Success URL
+                .defaultSuccessUrl("/bidList/list")
+                //.defaultSuccessUrl("/default", true).
                 .and()
-                .oauth2Login().defaultSuccessUrl("/bidList/list")
-                .and()
+                //Configuration of the logout - Home return
                 .logout().logoutUrl("/app-logout").logoutSuccessUrl("/")
+                //Invalidate the current HTTP session and its cookies
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/app/error");
-                */
-
-
+                //Definition of the default URL in case of exception of an access denied
+                .exceptionHandling().accessDeniedPage("/error")
+                .and()
+                //oAuth2 Authentification with default access URL
+                .oauth2Login().defaultSuccessUrl("/bidList/list");
     }
 
     @Autowired
@@ -71,23 +56,3 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 }
-
-
-
-        /*http.authorizeRequests()
-                .antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
-                .hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/resources/**").permitAll()
-                //.anyRequest().authenticated()
-                //.and().formLogin().loginPage("/login").permitAll()
-                .and().formLogin()
-                // configuration
-                .defaultSuccessUrl("/bidList/list").and().logout() // logout configuration
-                .logoutUrl("/app-logout").logoutSuccessUrl("/").and().exceptionHandling() // exception handling
-                // configuration
-                .accessDeniedPage("/app/error");
-    }*/
-
-
-
