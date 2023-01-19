@@ -2,7 +2,6 @@ package com.openclassrooms.poseidon.controllers;
 
 import com.openclassrooms.poseidon.configuration.ValidPassword;
 import com.openclassrooms.poseidon.models.User;
-import com.openclassrooms.poseidon.repositories.UserRepository;
 import com.openclassrooms.poseidon.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -26,21 +24,17 @@ public class UserController {
 
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
-    //@RolesAllowed("ADMIN")
+
     @RequestMapping("/user/list")
-    public String home(Model model, Principal principal) {
+    public String home(Model model) {
         model.addAttribute(ATTRIB_NAME, userService.getAllUsers());
-        model.addAttribute("username", principal.getName());
         logger.info("User List Data loading");
         return "user/list";
     }
 
-    //@RolesAllowed("ADMIN")
+
     @GetMapping("/user/add")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
@@ -49,7 +43,6 @@ public class UserController {
     }
 
     // Button Add User To List
-    //@RolesAllowed("ADMIN")
     @PostMapping("/user/validate")
     public String validate(@Valid @ValidPassword @ModelAttribute("user") User user, BindingResult result,
                            Model model, RedirectAttributes redirAttrs) {
@@ -87,7 +80,6 @@ public class UserController {
     }
 
     // Update User Button
-    //@RolesAllowed("ADMIN")
     @PostMapping("/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid @ValidPassword @ModelAttribute("user") User user,
                              BindingResult result, Model model, RedirectAttributes redirAttrs) {
@@ -106,7 +98,6 @@ public class UserController {
         return REDIRECT_TRANSAC;
     }
 
-    //@RolesAllowed("ADMIN")
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model,
                              RedirectAttributes redirAttrs) {

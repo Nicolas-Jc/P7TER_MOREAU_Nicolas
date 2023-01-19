@@ -25,9 +25,6 @@ public class TradeController {
     private static final String TRADE_NOT_EXISTS = "Trade {} not exists ! : ";
 
 
-    //@Autowired
-    //TradeRepository tradeRepository;
-
     @Autowired
     TradeService tradeService;
 

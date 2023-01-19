@@ -20,9 +20,6 @@ import java.security.Principal;
 @Controller
 public class CurveController {
 
-    //@Autowired
-    //CurvePointRepository curvePointRepository;
-
     @Autowired
     CurvePointService curvePointService;
 

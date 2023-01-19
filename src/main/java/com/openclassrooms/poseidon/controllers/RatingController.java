@@ -27,9 +27,6 @@ public class RatingController {
     private static final String RATING_NOT_EXISTS = "Rating {} not exists ! : ";
 
 
-    //@Autowired
-    //RatingRepository ratingRepository;
-
     @Autowired
     RatingService ratingService;
 

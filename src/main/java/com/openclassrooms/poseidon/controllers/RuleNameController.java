@@ -25,8 +25,6 @@ public class RuleNameController {
     private static final String REDIRECT_TRANSAC = "redirect:/ruleName/list";
     private static final String RULE_NOT_EXISTS = "Rule {} not exists ! : ";
 
-    //@Autowired
-    //RuleNameRepository ruleNameRepository;
 
     @Autowired
     RuleNameService ruleNameService;
